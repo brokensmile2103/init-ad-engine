@@ -1,0 +1,208 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Init Ad Engine\n"
+"Language: vi\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Init Ad Engine"
+msgstr ""
+
+msgid "A lightweight but powerful ad display engine for WordPress. Smart placement, no code required."
+msgstr ""
+
+msgid "Init Ad Engine Settings"
+msgstr ""
+
+msgid "Settings"
+msgstr ""
+
+msgid "Settings saved successfully."
+msgstr ""
+
+msgid "Billboard (below menu, desktop only)"
+msgstr ""
+
+msgid "Balloon Left (bottom-left corner)"
+msgstr ""
+
+msgid "Balloon Right (bottom-right corner)"
+msgstr ""
+
+msgid "Float Left (left sidebar)"
+msgstr ""
+
+msgid "Float Right (right sidebar)"
+msgstr ""
+
+msgid "Catfish Top (sticky top, desktop only)"
+msgstr ""
+
+msgid "Catfish Bottom (sticky bottom, desktop only)"
+msgstr ""
+
+msgid "Popup Center PC (desktop only)"
+msgstr ""
+
+msgid "Popup Center Mobile (mobile only)"
+msgstr ""
+
+msgid "Sticky Top (mobile only)"
+msgstr ""
+
+msgid "Sticky Bottom (mobile only)"
+msgstr ""
+
+msgid "Mini Billboard (mobile only)"
+msgstr ""
+
+msgid "Before Content (desktop)"
+msgstr ""
+
+msgid "Before Content (mobile)"
+msgstr ""
+
+msgid "After Content (desktop)"
+msgstr ""
+
+msgid "After Content (mobile)"
+msgstr ""
+
+msgid "Popunder (new tab on first click)"
+msgstr ""
+
+msgid "This ad will only appear on mobile devices."
+msgstr ""
+
+msgid "This ad will only appear on desktop."
+msgstr ""
+
+msgid "Recommended size:"
+msgstr ""
+
+msgid "Banner image URL"
+msgstr ""
+
+msgid "Choose Image"
+msgstr ""
+
+msgid "Target URL"
+msgstr ""
+
+msgid "Open in new tab?"
+msgstr ""
+
+msgid "Yes, open in new tab"
+msgstr ""
+
+msgid "Fallback ad code"
+msgstr ""
+
+msgid "Optional HTML/JS ad code shown when no banner is set."
+msgstr ""
+
+msgid "Display Behavior"
+msgstr ""
+
+msgid "Show immediately on page load"
+msgstr ""
+
+msgid "Show after delay (seconds)"
+msgstr ""
+
+msgid "Show on exit intent"
+msgstr ""
+
+msgid "Delay in seconds"
+msgstr ""
+
+msgid "Select how and when the popup should appear."
+msgstr ""
+
+msgid "Time between triggers (hours)"
+msgstr ""
+
+msgid "Minimum hours before this popup can reappear (per device/browser)."
+msgstr ""
+
+msgid "Minimum hours before popunder can trigger again."
+msgstr ""
+
+msgid "Trigger on click number"
+msgstr ""
+
+msgid "Popunder will activate on the N-th click."
+msgstr ""
+
+msgid "Code to insert inside <head>."
+msgstr ""
+
+msgid "Code to insert before </body>."
+msgstr ""
+
+msgid "Header Code"
+msgstr ""
+
+msgid "Footer Code"
+msgstr ""
+
+msgid "Save Settings"
+msgstr ""
+
+msgid "Affiliate Gate"
+msgstr ""
+
+msgid "Content Selector"
+msgstr ""
+
+msgid "CSS selector of the content block to gate (e.g. .entry-content)."
+msgstr ""
+
+msgid "Affiliate Link (Required)"
+msgstr ""
+
+msgid "Enter multiple links separated by commas (,) to display them randomly."
+msgstr ""
+
+msgid "Banner Image URL"
+msgstr ""
+
+msgid "Choose Image"
+msgstr ""
+
+msgid "Intro Text"
+msgstr ""
+
+msgid "Outro Text"
+msgstr ""
+
+msgid "Display Mode"
+msgstr ""
+
+msgid "Show every time (unless clicked in this post)"
+msgstr ""
+
+msgid "Hide after click for X hours"
+msgstr ""
+
+msgid "Show randomly (by % chance)"
+msgstr ""
+
+msgid "Show every X views"
+msgstr ""
+
+msgid "Show on specific views (e.g. 1,3,9)"
+msgstr ""
+
+msgid "Expire Duration (Hours)"
+msgstr ""
+
+msgid "Only applies if \"Show every time\" or \"Hide after click\" or \"Show on custom pages\" is selected."
+msgstr ""
+
+msgid "Blur Overlay Link & Selector"
+msgstr ""
+
+msgid "If all fields are set, a semi-transparent clickable overlay will appear on the selected element, only on specific views (e.g. 2,5,9)."
+msgstr ""

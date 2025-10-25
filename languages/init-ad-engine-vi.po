@@ -1,0 +1,208 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Init Ad Engine\n"
+"Language: vi\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Init Ad Engine"
+msgstr "Init Ad Engine"
+
+msgid "A lightweight but powerful ad display engine for WordPress. Smart placement, no code required."
+msgstr "Một công cụ hiển thị quảng cáo nhẹ nhưng mạnh mẽ cho WordPress. Đặt vị trí thông minh, không cần viết mã."
+
+msgid "Init Ad Engine Settings"
+msgstr "Cài đặt Init Ad Engine"
+
+msgid "Settings"
+msgstr "Cài đặt"
+
+msgid "Settings saved successfully."
+msgstr "Lưu cài đặt thành công."
+
+msgid "Billboard (below menu, desktop only)"
+msgstr "Billboard (dưới menu, chỉ hiển thị trên máy tính)"
+
+msgid "Balloon Left (bottom-left corner)"
+msgstr "Balloon bên trái (góc dưới bên trái)"
+
+msgid "Balloon Right (bottom-right corner)"
+msgstr "Balloon bên phải (góc dưới bên phải)"
+
+msgid "Float Left (left sidebar)"
+msgstr "Float trái (sidebar bên trái)"
+
+msgid "Float Right (right sidebar)"
+msgstr "Float phải (sidebar bên phải)"
+
+msgid "Catfish Top (sticky top, desktop only)"
+msgstr "Catfish trên (dính phía trên, chỉ máy tính)"
+
+msgid "Catfish Bottom (sticky bottom, desktop only)"
+msgstr "Catfish dưới (dính phía dưới, chỉ máy tính)"
+
+msgid "Popup Center PC (desktop only)"
+msgstr "Popup giữa màn hình (PC)"
+
+msgid "Popup Center Mobile (mobile only)"
+msgstr "Popup giữa màn hình (Mobile)"
+
+msgid "Sticky Top (mobile only)"
+msgstr "Sticky trên (chỉ hiển thị trên điện thoại)"
+
+msgid "Sticky Bottom (mobile only)"
+msgstr "Sticky dưới (chỉ hiển thị trên điện thoại)"
+
+msgid "Mini Billboard (mobile only)"
+msgstr "Mini Billboard (chỉ điện thoại)"
+
+msgid "Before Content (desktop)"
+msgstr "Trước nội dung (PC)"
+
+msgid "Before Content (mobile)"
+msgstr "Trước nội dung (Mobile)"
+
+msgid "After Content (desktop)"
+msgstr "Sau nội dung (PC)"
+
+msgid "After Content (mobile)"
+msgstr "Sau nội dung (Mobile)"
+
+msgid "Popunder (new tab on first click)"
+msgstr "Popunder (mở tab mới khi click lần đầu)"
+
+msgid "This ad will only appear on mobile devices."
+msgstr "Chỉ hiển thị trên thiết bị di động."
+
+msgid "This ad will only appear on desktop."
+msgstr "Chỉ hiển thị trên máy tính."
+
+msgid "Recommended size:"
+msgstr "Kích thước đề xuất:"
+
+msgid "Banner image URL"
+msgstr "Đường dẫn hình ảnh banner"
+
+msgid "Choose Image"
+msgstr "Chọn hình"
+
+msgid "Target URL"
+msgstr "Đường dẫn khi click"
+
+msgid "Open in new tab?"
+msgstr "Mở trong tab mới?"
+
+msgid "Yes, open in new tab"
+msgstr "Có, mở trong tab mới"
+
+msgid "Fallback ad code"
+msgstr "Mã quảng cáo thay thế"
+
+msgid "Optional HTML/JS ad code shown when no banner is set."
+msgstr "Mã quảng cáo HTML/JS sẽ hiển thị nếu không có banner."
+
+msgid "Display Behavior"
+msgstr "Cách hiển thị"
+
+msgid "Show immediately on page load"
+msgstr "Hiển thị ngay khi tải trang"
+
+msgid "Show after delay (seconds)"
+msgstr "Hiển thị sau một khoảng trễ (giây)"
+
+msgid "Show on exit intent"
+msgstr "Hiển thị khi chuẩn bị thoát trang"
+
+msgid "Delay in seconds"
+msgstr "Trễ (giây)"
+
+msgid "Select how and when the popup should appear."
+msgstr "Chọn cách và thời điểm popup xuất hiện."
+
+msgid "Time between triggers (hours)"
+msgstr "Thời gian giữa các lần hiển thị (giờ)"
+
+msgid "Minimum hours before this popup can reappear (per device/browser)."
+msgstr "Khoảng cách tối thiểu giữa hai lần hiển thị popup trên cùng thiết bị."
+
+msgid "Minimum hours before popunder can trigger again."
+msgstr "Thời gian tối thiểu trước khi popunder được kích hoạt lại."
+
+msgid "Trigger on click number"
+msgstr "Kích hoạt ở lần click thứ"
+
+msgid "Popunder will activate on the N-th click."
+msgstr "Popunder sẽ hiển thị ở lần click thứ N."
+
+msgid "Code to insert inside <head>."
+msgstr "Mã chèn vào trong thẻ <head>."
+
+msgid "Code to insert before </body>."
+msgstr "Mã chèn trước thẻ </body>."
+
+msgid "Header Code"
+msgstr "Mã chèn vào phần đầu (header)"
+
+msgid "Footer Code"
+msgstr "Mã chèn vào cuối trang (footer)"
+
+msgid "Save Settings"
+msgstr "Lưu cài đặt"
+
+msgid "Affiliate Gate"
+msgstr "Affiliate Gate"
+
+msgid "Content Selector"
+msgstr "Trình chọn nội dung"
+
+msgid "CSS selector of the content block to gate (e.g. .entry-content)."
+msgstr "CSS selector của khối nội dung cần khóa (ví dụ: .entry-content)."
+
+msgid "Affiliate Link (Required)"
+msgstr "Liên kết Affiliate (bắt buộc)"
+
+msgid "Enter multiple links separated by commas (,) to display them randomly."
+msgstr "Nhập nhiều liên kết, cách nhau bằng dấu phẩy (,) để hiển thị ngẫu nhiên."
+
+msgid "Banner Image URL"
+msgstr "Đường dẫn ảnh banner"
+
+msgid "Choose Image"
+msgstr "Chọn ảnh"
+
+msgid "Intro Text"
+msgstr "Nội dung giới thiệu"
+
+msgid "Outro Text"
+msgstr "Nội dung kết thúc"
+
+msgid "Display Mode"
+msgstr "Chế độ hiển thị"
+
+msgid "Show every time (unless clicked in this post)"
+msgstr "Luôn hiển thị (trừ khi đã bấm trong bài này)"
+
+msgid "Hide after click for X hours"
+msgstr "Ẩn sau khi bấm trong X giờ"
+
+msgid "Show randomly (by % chance)"
+msgstr "Hiển thị ngẫu nhiên (theo % cơ hội)"
+
+msgid "Show every X views"
+msgstr "Hiển thị sau mỗi X lượt xem"
+
+msgid "Show on specific views (e.g. 1,3,9)"
+msgstr "Hiển thị ở các lượt xem cụ thể (vd: 1,3,9)"
+
+msgid "Expire Duration (Hours)"
+msgstr "Thời gian ẩn (giờ)"
+
+msgid "Only applies if \"Show every time\" or \"Hide after click\" or \"Show on custom pages\" is selected."
+msgstr "Chỉ áp dụng nếu chọn \"Luôn hiển thị\", \"Ẩn sau khi bấm\" hoặc \"Hiển thị theo bước tùy chọn\"."
+
+msgid "Blur Overlay Link & Selector"
+msgstr "Liên kết & vùng cần chèn lớp mờ"
+
+msgid "If all fields are set, a semi-transparent clickable overlay will appear on the selected element, only on specific views (e.g. 2,5,9)."
+msgstr "Nếu điền đầy đủ, lớp mờ có thể nhấp sẽ hiển thị trên phần tử đã chọn, chỉ ở các lượt xem cụ thể (vd: 2,5,9)."
