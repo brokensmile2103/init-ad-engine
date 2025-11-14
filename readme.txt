@@ -2,9 +2,9 @@
 Contributors: brokensmile.2103
 Tags: ads, banner, popup, popunder, content locking
 Requires at least: 5.5
-Tested up to: 6.8
+Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 1.3
+Stable tag: 1.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -32,6 +32,8 @@ Mini Billboard, Sticky Top/Bottom, Popup Center, Before/After Content
 Popunder (opens new tab on first click), Global header/footer code injection
 
 This plugin is part of the [Init Plugin Suite](https://en.inithtml.com/init-plugin-suite-minimalist-powerful-and-free-wordpress-plugins/) — a collection of minimalist, fast, and developer-focused tools for WordPress.
+
+GitHub repository: [https://github.com/brokensmile2103/init-ad-engine](https://github.com/brokensmile2103/init-ad-engine)
 
 == Features ==
 
@@ -81,9 +83,18 @@ No. Version 1.0 focuses on display only. Analytics may be added in future update
 
 == Screenshots ==
 
-1. Affiliate Gate settings page.
+1. **PC Settings Tab** – Configure desktop-only ad positions such as Billboard, Catfish, Popup Center PC, and sidebar floats  
+2. **Mobile Settings Tab** – Configure mobile-specific units including Sticky Top/Bottom, Mini Billboard, and Popup Center Mobile  
+3. **Popunder & Global Tab** – Configure popunder behavior and global head/footer injection  
+4. **Affiliate Gate Tab** – Full settings UI for content gating, steps, random modes, blur overlay, and banner configuration
 
 == Changelog ==
+
+= 1.4 – November 14, 2025 =
+- UX: Settings screen now **remembers the last active tab** and automatically restores it when you reopen the page
+- UX: Improved height/scroll behavior for **“Popunder & Global”** tab to prevent sudden jumps when switching tabs
+- Dev: Refactored tab-switching logic to a single inline handler using `localStorage` for per-admin tab state
+- Maint: Kept existing markup and option structure intact to avoid breaking any saved configurations or integrations
 
 = 1.3 – October 25, 2025 =
 - New: Affiliate Gate now supports **multiple affiliate links** separated by commas — one will be displayed **randomly** on each trigger
