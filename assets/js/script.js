@@ -82,6 +82,32 @@ document.addEventListener('DOMContentLoaded', () => {
         const renderAd = () => {
             const isPopupCenter = position === 'popupCenterPC' || position === 'popupCenterMobile';
 
+            // Build the inner content FIRST. If there's nothing to show,
+            // bail out before touching the DOM at all (no backdrop, no
+            // wrapper) so empty/unconfigured positions render nothing.
+            const inner = document.createElement('div');
+            inner.className = 'ad-inner';
+
+            if (item.img) {
+                const a = document.createElement('a');
+                a.href = item.url || '#';
+                if (item.target === '_blank') a.target = '_blank';
+
+                const img = document.createElement('img');
+                img.src = item.img;
+                img.alt = 'Ad';
+                img.loading = 'lazy';
+
+                a.appendChild(img);
+                inner.appendChild(a);
+            } else if (item.fallback) {
+                const fallbackWrap = document.createElement('div');
+                fallbackWrap.innerHTML = item.fallback;
+                inner.appendChild(fallbackWrap);
+            } else {
+                return;
+            }
+
             let backdrop = null;
             if (isPopupCenter) {
                 backdrop = document.createElement('div');
@@ -103,9 +129,6 @@ document.addEventListener('DOMContentLoaded', () => {
             if (backdrop) {
                 backdrop.addEventListener('click', closeAll);
             }
-
-            const inner = document.createElement('div');
-            inner.className = 'ad-inner';
 
             // Positioning styles
             switch (position) {
@@ -144,27 +167,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 closeBtn.innerHTML = '&times;';
                 closeBtn.onclick = () => closeAll();
                 inner.appendChild(closeBtn);
-            }
-
-            // Content
-            if (item.img) {
-                const a = document.createElement('a');
-                a.href = item.url || '#';
-                if (item.target === '_blank') a.target = '_blank';
-
-                const img = document.createElement('img');
-                img.src = item.img;
-                img.alt = 'Ad';
-                img.loading = 'lazy';
-
-                a.appendChild(img);
-                inner.appendChild(a);
-            } else if (item.fallback) {
-                const fallbackWrap = document.createElement('div');
-                fallbackWrap.innerHTML = item.fallback;
-                inner.appendChild(fallbackWrap);
-            } else {
-                return;
             }
 
             wrapper.appendChild(inner);
