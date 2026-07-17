@@ -4,7 +4,7 @@ Tags: ads, banner, popup, popunder, content locking
 Requires at least: 5.5
 Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 1.5
+Stable tag: 1.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -46,6 +46,9 @@ GitHub repository: [https://github.com/brokensmile2103/init-ad-engine](https://g
 * Responsive support for all device types
 * Clean admin UI with media uploader
 * Affiliate Gate with flexible display logic (always-on, expire-after-click, random %, every X pages)
+* Optional schedule window (start/end date) for any position, popunder, or the Affiliate Gate
+* Optional frequency cap (hours) for static banner positions
+* Optional "open link on close" behavior for ads with a close (x) button
 
 == Filters for Developers ==
 
@@ -93,7 +96,14 @@ No. Version 1.0 focuses on display only. Analytics may be added in future update
 
 == Changelog ==
 
-= 1.5 – July 18, 2026 =
+= 1.6 – July 18, 2026 =
+- New: Optional Schedule (start/end date) for every ad position, popunder, and Affiliate Gate — set a date window and the plugin stops serving it outside that range automatically, no manual on/off toggling needed
+- New: Frequency cap (hours) for static banner positions (Billboard, Balloon L/R, Float L/R, Catfish Top/Bottom, Mini Billboard, Sticky Top/Bottom Mobile) — limits how often the same browser sees that banner again. Defaults to 0 (no cap), so existing sites keep their current always-on behavior
+- New: "Close (x) button action" checkbox — optionally open the ad's Target URL in a new tab when a visitor dismisses it via the close button, for positions that have one
+- Dev: Added `init_plugin_suite_ad_engine_is_within_schedule()` helper for the new scheduling checks
+- i18n: Added Vietnamese translations for all new strings; fixed a duplicate `msgid "Choose Image"` in the `.po`/`.pot` files that caused a `msgfmt` compile error
+
+= 1.5 – July 17, 2026 =
 - Fix: Removed a duplicated popunder handler in `script.js` that could cause the popunder to fire twice or mis-trigger against the configured click threshold
 - Fix: Popunder cooldown is now re-evaluated on every click instead of once at page load, so it no longer appears completely dead if the tab stays open across the cooldown window
 - Fix: Popunder storage access (localStorage/sessionStorage) is now wrapped defensively so it can't be silently broken by Safari private mode or storage-blocking extensions

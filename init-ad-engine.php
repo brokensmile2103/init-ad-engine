@@ -3,7 +3,7 @@
  * Plugin Name: Init Ad Engine
  * Plugin URI: https://inithtml.com/plugin/init-ad-engine/
  * Description: A lightweight but powerful ad display engine for WordPress. Smart placement, no code required.
- * Version: 1.5
+ * Version: 1.6
  * Author: Init HTML
  * Author URI: https://inithtml.com/
  * Text Domain: init-ad-engine
@@ -17,7 +17,7 @@
 
 defined('ABSPATH') || exit;
 
-define('INIT_PLUGIN_SUITE_AD_ENGINE_VERSION',        '1.5');
+define('INIT_PLUGIN_SUITE_AD_ENGINE_VERSION',        '1.6');
 define('INIT_PLUGIN_SUITE_AD_ENGINE_SLUG',           'init-ad-engine');
 define('INIT_PLUGIN_SUITE_AD_ENGINE_OPTION',         'init_plugin_suite_ad_engine_settings');
 define('INIT_PLUGIN_SUITE_AD_ENGINE_URL',            plugin_dir_url(__FILE__));
@@ -106,6 +106,29 @@ function init_plugin_suite_ad_engine_render_snippet( $content ) {
 }
 
 /**
+ * Check whether "today" (site timezone) falls within an optional schedule window.
+ * Empty start/end means "no limit" on that side, so existing configs without
+ * a schedule keep behaving exactly as before (always on).
+ *
+ * @param string $start Y-m-d or empty.
+ * @param string $end   Y-m-d or empty.
+ * @return bool
+ */
+function init_plugin_suite_ad_engine_is_within_schedule( $start, $end ) {
+    $today = current_time( 'Y-m-d' );
+
+    if ( ! empty( $start ) && $today < $start ) {
+        return false;
+    }
+
+    if ( ! empty( $end ) && $today > $end ) {
+        return false;
+    }
+
+    return true;
+}
+
+/**
  * Global head injection (admin-configured)
  */
 add_action( 'wp_head', function () {
@@ -158,6 +181,23 @@ add_action('wp_enqueue_scripts', function () {
 
     $ad_data = array();
 
+    // Positions rendered client-side that are eligible for the new frequency cap
+    // (popupCenter* already has its own delay_hours cap; popunder has its own
+    // delay_hours + click_threshold cap, so neither is duplicated here).
+    $cap_hours_positions = array(
+        'billboard', 'balloonLeft', 'balloonRight', 'floatLeft', 'floatRight',
+        'catfishTop', 'catfishBottom', 'miniBillboard',
+        'stickyTopMobile', 'stickyBottomMobile',
+    );
+
+    // Positions that render a close ("x") button on the frontend.
+    $closable_positions = array(
+        'balloonLeft', 'balloonRight', 'floatLeft', 'floatRight',
+        'catfishTop', 'catfishBottom',
+        'popupCenterPC', 'popupCenterMobile',
+        'stickyTopMobile', 'stickyBottomMobile',
+    );
+
     foreach ($positions as $pos) {
         $config = isset($settings[$pos]) && is_array($settings[$pos]) ? $settings[$pos] : array();
 
@@ -176,6 +216,16 @@ add_action('wp_enqueue_scripts', function () {
             continue;
         }
 
+        // Schedule window (optional). Empty start/end = always on, same as before.
+        $schedule_ok = init_plugin_suite_ad_engine_is_within_schedule(
+            isset($config['schedule_start']) ? $config['schedule_start'] : '',
+            isset($config['schedule_end']) ? $config['schedule_end'] : ''
+        );
+
+        if (!$schedule_ok) {
+            continue;
+        }
+
         $item = array(
             'img'      => isset($config['img']) ? $config['img'] : '',
             'url'      => isset($config['url']) ? $config['url'] : '',
@@ -184,6 +234,14 @@ add_action('wp_enqueue_scripts', function () {
             'fallback' => html_entity_decode(isset($config['fallback']) ? $config['fallback'] : ''),
             'device'   => $is_mobile_pos ? 'mobile' : ($pos === 'popunder' ? 'both' : 'desktop'),
         );
+
+        if (in_array($pos, $cap_hours_positions, true)) {
+            $item['cap_hours'] = isset($config['cap_hours']) ? intval($config['cap_hours']) : 0;
+        }
+
+        if (in_array($pos, $closable_positions, true)) {
+            $item['open_on_close'] = !empty($config['open_on_close']);
+        }
 
         if ($is_popup_center) {
             $item['display']     = isset($config['display']) ? $config['display'] : 'immediate';
@@ -230,7 +288,12 @@ add_action('wp_enqueue_scripts', function () {
     // =====================
     $aff = isset($settings['aff_gate']) && is_array($settings['aff_gate']) ? $settings['aff_gate'] : array();
 
-    if (!empty($aff['link'])) {
+    $aff_schedule_ok = init_plugin_suite_ad_engine_is_within_schedule(
+        isset($aff['schedule_start']) ? $aff['schedule_start'] : '',
+        isset($aff['schedule_end']) ? $aff['schedule_end'] : ''
+    );
+
+    if (!empty($aff['link']) && $aff_schedule_ok) {
         $should_enqueue = apply_filters('init_plugin_suite_ad_engine_should_enqueue_affiliate_gate', true, $aff);
 
         if ($should_enqueue) {
@@ -293,17 +356,27 @@ function init_plugin_suite_ad_engine_inject_content_ads($content) {
     $before_data = isset($settings[$before_key]) ? $settings[$before_key] : array();
     $after_data  = isset($settings[$after_key])  ? $settings[$after_key]  : array();
 
-    $before_ad = init_plugin_suite_ad_engine_render_ad_block(
+    $before_in_schedule = init_plugin_suite_ad_engine_is_within_schedule(
+        isset($before_data['schedule_start']) ? $before_data['schedule_start'] : '',
+        isset($before_data['schedule_end']) ? $before_data['schedule_end'] : ''
+    );
+
+    $after_in_schedule = init_plugin_suite_ad_engine_is_within_schedule(
+        isset($after_data['schedule_start']) ? $after_data['schedule_start'] : '',
+        isset($after_data['schedule_end']) ? $after_data['schedule_end'] : ''
+    );
+
+    $before_ad = $before_in_schedule ? init_plugin_suite_ad_engine_render_ad_block(
         $before_data,
         $is_mobile ? 'before_content_mobile' : 'before_content_pc',
         $is_mobile ? 'before-content-mobile' : 'before-content-pc'
-    );
+    ) : '';
 
-    $after_ad = init_plugin_suite_ad_engine_render_ad_block(
+    $after_ad = $after_in_schedule ? init_plugin_suite_ad_engine_render_ad_block(
         $after_data,
         $is_mobile ? 'after_content_mobile' : 'after_content_pc',
         $is_mobile ? 'after-content-mobile' : 'after-content-pc'
-    );
+    ) : '';
 
     return $before_ad . $content . $after_ad;
 }

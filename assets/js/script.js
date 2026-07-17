@@ -165,7 +165,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 const closeBtn = document.createElement('button');
                 closeBtn.className = 'close-btn';
                 closeBtn.innerHTML = '&times;';
-                closeBtn.onclick = () => closeAll();
+                closeBtn.onclick = () => {
+                    // Optional: dismissing with the x can also open the
+                    // Target URL, same as clicking the ad itself.
+                    if (item.open_on_close && item.url) {
+                        window.open(item.url, '_blank', 'noopener');
+                    }
+                    closeAll();
+                };
                 inner.appendChild(closeBtn);
             }
 
@@ -177,8 +184,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 document.body.appendChild(wrapper);
             }
 
-            // Save timestamp
-            if (position.startsWith('popupCenter')) {
+            // Save timestamp (popup center's own delay_hours cap, or the
+            // generic per-position frequency cap for static banners).
+            if (position.startsWith('popupCenter') || item.cap_hours) {
                 const key = 'initAdShown-' + position;
                 localStorage.setItem(key, Date.now().toString());
             }
@@ -211,6 +219,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             }
         } else {
+            // Frequency cap for static banners (billboard, balloons, floats,
+            // catfish, sticky, miniBillboard). Popup center handles its own
+            // cooldown above via delay_hours; cap_hours defaults to 0 (no
+            // cap) so existing configs keep showing on every page view.
+            if (item.cap_hours) {
+                const key = 'initAdShown-' + position;
+                const last = parseInt(localStorage.getItem(key) || '0');
+                const canShow = (Date.now() - last) >= item.cap_hours * 3600 * 1000;
+                if (!canShow) return;
+            }
+
             renderAd();
         }
     });

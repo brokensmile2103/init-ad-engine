@@ -84,9 +84,6 @@ msgstr "Kích thước đề xuất:"
 msgid "Banner image URL"
 msgstr "Đường dẫn hình ảnh banner"
 
-msgid "Choose Image"
-msgstr "Chọn hình"
-
 msgid "Target URL"
 msgstr "Đường dẫn khi click"
 
@@ -206,3 +203,24 @@ msgstr "Liên kết & vùng cần chèn lớp mờ"
 
 msgid "If all fields are set, a semi-transparent clickable overlay will appear on the selected element, only on specific views (e.g. 2,5,9)."
 msgstr "Nếu điền đầy đủ, lớp mờ có thể nhấp sẽ hiển thị trên phần tử đã chọn, chỉ ở các lượt xem cụ thể (vd: 2,5,9)."
+
+msgid "Schedule (optional)"
+msgstr "Lịch chạy (tùy chọn)"
+
+msgid "to"
+msgstr "đến"
+
+msgid "Leave both empty to run with no date limit. If only one side is set, the other side is unlimited."
+msgstr "Để trống cả hai nếu muốn chạy không giới hạn ngày. Nếu chỉ điền một bên, bên còn lại sẽ không giới hạn."
+
+msgid "Frequency cap (hours)"
+msgstr "Giới hạn tần suất hiển thị (giờ)"
+
+msgid "Minimum hours before this ad shows again to the same browser. Leave 0 to show on every page view (default behavior)."
+msgstr "Số giờ tối thiểu trước khi quảng cáo này hiển thị lại cho cùng một trình duyệt. Để 0 để hiển thị ở mọi lượt xem trang (mặc định)."
+
+msgid "Close (x) button action"
+msgstr "Hành động khi bấm nút đóng (x)"
+
+msgid "Also open the Target URL (in a new tab) when the visitor dismisses this ad with the x button"
+msgstr "Đồng thời mở Đường dẫn khi click (trong tab mới) khi người dùng đóng quảng cáo này bằng nút x"

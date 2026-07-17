@@ -120,6 +120,9 @@ function init_plugin_suite_ad_engine_sanitize_settings($input) {
     }
 
     if (isset($input['aff_gate']) && is_array($input['aff_gate'])) {
+        $aff_schedule_start = trim((string) ($input['aff_gate']['schedule_start'] ?? ''));
+        $aff_schedule_end   = trim((string) ($input['aff_gate']['schedule_end'] ?? ''));
+
         $sanitized['aff_gate'] = [
             'selector'       => sanitize_text_field($input['aff_gate']['selector'] ?? ''),
             'link'           => esc_url_raw($input['aff_gate']['link'] ?? ''),
@@ -131,6 +134,10 @@ function init_plugin_suite_ad_engine_sanitize_settings($input) {
             'every_x'        => absint($input['aff_gate']['every_x'] ?? 3),
             'expire_hours'   => absint($input['aff_gate']['expire_hours'] ?? 6),
             'custom_steps'   => sanitize_text_field($input['aff_gate']['custom_steps'] ?? ''),
+            // Strict Y-m-d only; a malformed value is dropped instead of
+            // risking a gate that silently disables/enables at the wrong time.
+            'schedule_start' => preg_match('/^\d{4}-\d{2}-\d{2}$/', $aff_schedule_start) ? $aff_schedule_start : '',
+            'schedule_end'   => preg_match('/^\d{4}-\d{2}-\d{2}$/', $aff_schedule_end) ? $aff_schedule_end : '',
             'blur_overlay'   => [
                 'link'       => esc_url_raw($input['aff_gate']['blur_overlay']['link'] ?? ''),
                 'selector'   => sanitize_text_field($input['aff_gate']['blur_overlay']['selector'] ?? ''),
@@ -173,7 +180,18 @@ function init_plugin_suite_ad_engine_sanitize_position_data($data, $position = '
             case 'delay':
             case 'delay_hours':
             case 'click_threshold':
+            case 'cap_hours':
                 $sanitized[$field] = absint($value);
+                break;
+            case 'schedule_start':
+            case 'schedule_end':
+                $value = is_string($value) ? trim($value) : '';
+                // Only accept a strict Y-m-d date; anything else is dropped
+                // so a malformed value can never silently disable a position.
+                $sanitized[$field] = (bool) preg_match('/^\d{4}-\d{2}-\d{2}$/', $value) ? $value : '';
+                break;
+            case 'open_on_close':
+                $sanitized[$field] = ($value === '1') ? '1' : '';
                 break;
             default:
                 $sanitized[$field] = sanitize_text_field($value);
@@ -188,6 +206,19 @@ function init_plugin_suite_ad_engine_sanitize_position_data($data, $position = '
     // Popunder has no such checkbox, so it's excluded.
     if ($position !== 'popunder' && !isset($sanitized['target'])) {
         $sanitized['target'] = '';
+    }
+
+    // Same story for the "Open link on close (x)" checkbox: only positions
+    // that actually render a close button expose this field.
+    $closable_positions = array(
+        'balloonLeft', 'balloonRight', 'floatLeft', 'floatRight',
+        'catfishTop', 'catfishBottom',
+        'popupCenterPC', 'popupCenterMobile',
+        'stickyTopMobile', 'stickyBottomMobile',
+    );
+
+    if (in_array($position, $closable_positions, true) && !isset($sanitized['open_on_close'])) {
+        $sanitized['open_on_close'] = '';
     }
 
     return $sanitized;
@@ -215,6 +246,18 @@ function render_ad_position_fields($position, $config, $settings, $sizeHints) {
                 ?>
             </p>
         </th>
+    </tr>
+
+    <tr>
+        <th><label><?php esc_html_e('Schedule (optional)', 'init-ad-engine'); ?></label></th>
+        <td>
+            <input type="date" name="init_ad_engine[<?php echo esc_attr($position); ?>][schedule_start]"
+                   value="<?php echo esc_attr($settings[$position]['schedule_start'] ?? ''); ?>" />
+            <?php esc_html_e('to', 'init-ad-engine'); ?>
+            <input type="date" name="init_ad_engine[<?php echo esc_attr($position); ?>][schedule_end]"
+                   value="<?php echo esc_attr($settings[$position]['schedule_end'] ?? ''); ?>" />
+            <p class="description"><?php esc_html_e('Leave both empty to run with no date limit. If only one side is set, the other side is unlimited.', 'init-ad-engine'); ?></p>
+        </td>
     </tr>
 
     <?php if ($position === 'popunder'): ?>
@@ -275,6 +318,28 @@ function render_ad_position_fields($position, $config, $settings, $sizeHints) {
                 </label>
             </td>
         </tr>
+
+        <?php
+        $closable_positions = array(
+            'balloonLeft', 'balloonRight', 'floatLeft', 'floatRight',
+            'catfishTop', 'catfishBottom',
+            'popupCenterPC', 'popupCenterMobile',
+            'stickyTopMobile', 'stickyBottomMobile',
+        );
+        ?>
+        <?php if (in_array($position, $closable_positions, true)): ?>
+            <tr>
+                <th><label><?php esc_html_e('Close (x) button action', 'init-ad-engine'); ?></label></th>
+                <td>
+                    <label>
+                        <input type="checkbox" name="init_ad_engine[<?php echo esc_attr($position); ?>][open_on_close]"
+                               value="1" <?php checked($settings[$position]['open_on_close'] ?? '', '1'); ?> />
+                        <?php esc_html_e('Also open the Target URL (in a new tab) when the visitor dismisses this ad with the x button', 'init-ad-engine'); ?>
+                    </label>
+                </td>
+            </tr>
+        <?php endif; ?>
+
         <tr>
             <th><label><?php esc_html_e('Fallback ad code', 'init-ad-engine'); ?></label></th>
             <td>
@@ -283,6 +348,26 @@ function render_ad_position_fields($position, $config, $settings, $sizeHints) {
                 <p class="description"><?php esc_html_e('Optional HTML/JS ad code shown when no banner is set.', 'init-ad-engine'); ?></p>
             </td>
         </tr>
+
+        <?php
+        $cap_hours_positions = array(
+            'billboard', 'balloonLeft', 'balloonRight', 'floatLeft', 'floatRight',
+            'catfishTop', 'catfishBottom', 'miniBillboard',
+            'stickyTopMobile', 'stickyBottomMobile',
+        );
+        ?>
+        <?php if (in_array($position, $cap_hours_positions, true)): ?>
+            <tr>
+                <th><label><?php esc_html_e('Frequency cap (hours)', 'init-ad-engine'); ?></label></th>
+                <td>
+                    <input type="number" min="0" step="1"
+                           name="init_ad_engine[<?php echo esc_attr($position); ?>][cap_hours]"
+                           value="<?php echo esc_attr($settings[$position]['cap_hours'] ?? 0); ?>"
+                           class="small-text" />
+                    <p class="description"><?php esc_html_e('Minimum hours before this ad shows again to the same browser. Leave 0 to show on every page view (default behavior).', 'init-ad-engine'); ?></p>
+                </td>
+            </tr>
+        <?php endif; ?>
 
         <?php if (in_array($position, ['popupCenterPC', 'popupCenterMobile'], true)): ?>
             <tr>
@@ -538,6 +623,18 @@ function init_plugin_suite_ad_engine_render_settings_page() {
                                    value="<?php echo esc_attr($settings['aff_gate']['expire_hours'] ?? 6); ?>"
                                    class="small-text" />
                             <p class="description"><?php esc_html_e('Only applies if "Show every time" or "Hide after click" or "Show on custom pages" is selected.', 'init-ad-engine'); ?></p>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th><label><?php esc_html_e('Schedule (optional)', 'init-ad-engine'); ?></label></th>
+                        <td>
+                            <input type="date" name="init_ad_engine[aff_gate][schedule_start]"
+                                   value="<?php echo esc_attr($settings['aff_gate']['schedule_start'] ?? ''); ?>" />
+                            <?php esc_html_e('to', 'init-ad-engine'); ?>
+                            <input type="date" name="init_ad_engine[aff_gate][schedule_end]"
+                                   value="<?php echo esc_attr($settings['aff_gate']['schedule_end'] ?? ''); ?>" />
+                            <p class="description"><?php esc_html_e('Leave both empty to run with no date limit. If only one side is set, the other side is unlimited.', 'init-ad-engine'); ?></p>
                         </td>
                     </tr>
 

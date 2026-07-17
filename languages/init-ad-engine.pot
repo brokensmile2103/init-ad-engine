@@ -84,9 +84,6 @@ msgstr ""
 msgid "Banner image URL"
 msgstr ""
 
-msgid "Choose Image"
-msgstr ""
-
 msgid "Target URL"
 msgstr ""
 
@@ -205,4 +202,25 @@ msgid "Blur Overlay Link & Selector"
 msgstr ""
 
 msgid "If all fields are set, a semi-transparent clickable overlay will appear on the selected element, only on specific views (e.g. 2,5,9)."
+msgstr ""
+
+msgid "Schedule (optional)"
+msgstr ""
+
+msgid "to"
+msgstr ""
+
+msgid "Leave both empty to run with no date limit. If only one side is set, the other side is unlimited."
+msgstr ""
+
+msgid "Frequency cap (hours)"
+msgstr ""
+
+msgid "Minimum hours before this ad shows again to the same browser. Leave 0 to show on every page view (default behavior)."
+msgstr ""
+
+msgid "Close (x) button action"
+msgstr ""
+
+msgid "Also open the Target URL (in a new tab) when the visitor dismisses this ad with the x button"
 msgstr ""
