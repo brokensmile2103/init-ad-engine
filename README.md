@@ -64,7 +64,7 @@ Includes inline field description for clarity.
 | `init_plugin_suite_ad_engine_use_kses` | Enable or disable escaping of ad snippets (default: `true`) |
 | `init_plugin_suite_ad_engine_allowed_tags` | Modify the allow-list for tags/attributes |
 | `init_plugin_suite_ad_engine_disable_all_ads` | Disable all ad injections globally |
-| `init_ad_engine_should_enqueue_affiliate_gate` | Control when Affiliate Gate scripts are enqueued |
+| `init_plugin_suite_ad_engine_should_enqueue_affiliate_gate` | Control when Affiliate Gate scripts are enqueued |
 
 ## Installation
 
