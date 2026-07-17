@@ -17,10 +17,22 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     .init-ad-engine.fixed { position: fixed; }
     .init-ad-engine img {
+        max-width: 100%;
         height: auto;
         max-height: 100vh;
         display: block;
         margin: 0 auto;
+    }
+    .init-ad-engine-backdrop {
+        position: fixed;
+        inset: 0;
+        z-index: 9997;
+        background: rgba(0, 0, 0, 0.6);
+        animation: initAdEngineFadeIn 0.15s ease-out;
+    }
+    @keyframes initAdEngineFadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
     }
     .init-ad-engine .close-btn {
         position: absolute;
@@ -68,10 +80,28 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!shouldRender) return;
 
         const renderAd = () => {
+            const isPopupCenter = position === 'popupCenterPC' || position === 'popupCenterMobile';
+
+            let backdrop = null;
+            if (isPopupCenter) {
+                backdrop = document.createElement('div');
+                backdrop.className = 'init-ad-engine-backdrop';
+                document.body.appendChild(backdrop);
+            }
+
             const wrapper = document.createElement('div');
             wrapper.className = 'init-ad-engine ad-' + position;
             if (!['billboard', 'miniBillboard'].includes(position)) {
                 wrapper.classList.add('fixed');
+            }
+
+            const closeAll = () => {
+                wrapper.remove();
+                if (backdrop) backdrop.remove();
+            };
+
+            if (backdrop) {
+                backdrop.addEventListener('click', closeAll);
             }
 
             const inner = document.createElement('div');
@@ -112,7 +142,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const closeBtn = document.createElement('button');
                 closeBtn.className = 'close-btn';
                 closeBtn.innerHTML = '&times;';
-                closeBtn.onclick = () => wrapper.remove();
+                closeBtn.onclick = () => closeAll();
                 inner.appendChild(closeBtn);
             }
 
@@ -185,88 +215,65 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // Handle popunder (run after all DOM loaded)
-(function () {
+document.addEventListener('DOMContentLoaded', () => {
     const data = window.InitPluginSuiteAdEngine;
     if (!data || typeof data !== 'object') return;
 
     const popunder = data.popunder;
-    if (!popunder || !popunder.url) return;
+    const popunderUrl = popunder && typeof popunder.url === 'string' ? popunder.url.trim() : '';
+    if (!popunderUrl) return;
 
     const STORAGE_KEY_LAST = 'initPopunderLast';
     const STORAGE_KEY_CLICK = 'initPopunderClick';
-    const now = Date.now();
-    const lastShown = parseInt(localStorage.getItem(STORAGE_KEY_LAST) || '0');
-    const clickThreshold = parseInt(popunder.click_threshold) || 1;
-    const delayHours = parseInt(popunder.delay_hours) || 24;
+    const clickThreshold = Math.max(1, parseInt(popunder.click_threshold, 10) || 1);
+    const delayHours = Math.max(0, parseInt(popunder.delay_hours, 10) || 0) || 24;
 
-    if ((now - lastShown) < delayHours * 3600 * 1000) return;
+    // Safe wrappers: some browsers (Safari private mode, locked-down webviews,
+    // certain extensions) throw when touching localStorage/sessionStorage.
+    // A thrown error here used to silently kill the whole popunder feature.
+    const safeGet = (storage, key) => {
+        try { return storage.getItem(key); } catch (e) { return null; }
+    };
+    const safeSet = (storage, key, value) => {
+        try { storage.setItem(key, value); } catch (e) { /* ignore */ }
+    };
 
-    let clickCount = parseInt(sessionStorage.getItem(STORAGE_KEY_CLICK) || '0');
+    let clickCount = parseInt(safeGet(sessionStorage, STORAGE_KEY_CLICK) || '0', 10) || 0;
+
+    const isInCooldown = () => {
+        const lastShown = parseInt(safeGet(localStorage, STORAGE_KEY_LAST) || '0', 10) || 0;
+        return (Date.now() - lastShown) < delayHours * 3600 * 1000;
+    };
+
     const trigger = () => {
         const a = document.createElement('a');
-        a.href = popunder.url;
+        a.href = popunderUrl;
         a.target = '_blank';
-        a.rel = 'noopener';
+        a.rel = 'noopener noreferrer';
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
 
-        console.log(popunder.url);
-
-        localStorage.setItem(STORAGE_KEY_LAST, Date.now().toString());
-        sessionStorage.setItem(STORAGE_KEY_CLICK, '0');
+        safeSet(localStorage, STORAGE_KEY_LAST, Date.now().toString());
+        safeSet(sessionStorage, STORAGE_KEY_CLICK, '0');
     };
 
     const clickHandler = (e) => {
         const target = e.target.closest('a');
         if (target && target.target === '_blank') return;
 
+        // Re-check cooldown on every click instead of once at page load,
+        // so the listener stays active even if the tab was left open across
+        // the cooldown boundary, and testing/QA doesn't need a hard reload.
+        if (isInCooldown()) return;
+
         clickCount++;
-        sessionStorage.setItem(STORAGE_KEY_CLICK, clickCount.toString());
+        safeSet(sessionStorage, STORAGE_KEY_CLICK, clickCount.toString());
         if (clickCount >= clickThreshold) {
-            document.removeEventListener('click', clickHandler);
+            clickCount = 0;
             trigger();
         }
     };
 
     document.addEventListener('click', clickHandler);
-})();
-
-document.addEventListener('DOMContentLoaded', () => {
-    const pop = window.InitPluginSuiteAdEngine?.popunder;
-    if (!pop || !pop.url) return;
-
-    const LAST_KEY = 'initPopunderLast';
-    const CLICK_KEY = 'initPopunderClick';
-    const now = Date.now();
-    const lastShown = parseInt(localStorage.getItem(LAST_KEY) || '0');
-    const delayHours = parseInt(pop.delay_hours) || 24;
-    const clickThreshold = parseInt(pop.click_threshold) || 1;
-
-    if ((now - lastShown) < delayHours * 3600 * 1000) return;
-
-    let clicks = parseInt(sessionStorage.getItem(CLICK_KEY) || '0');
-
-    const triggerPopunder = () => {
-        const a = document.createElement('a');
-        a.href = pop.url;
-        a.target = '_blank';
-        a.rel = 'noopener';
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        localStorage.setItem(LAST_KEY, now.toString());
-        sessionStorage.setItem(CLICK_KEY, '0');
-    };
-
-    const handleClick = () => {
-        clicks++;
-        sessionStorage.setItem(CLICK_KEY, clicks.toString());
-        if (clicks >= clickThreshold) {
-            document.body.removeEventListener('click', handleClick);
-            triggerPopunder();
-        }
-    };
-
-    document.body.addEventListener('click', handleClick, { once: false });
 });

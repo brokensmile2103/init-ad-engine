@@ -3,13 +3,13 @@
  * Plugin Name: Init Ad Engine
  * Plugin URI: https://inithtml.com/plugin/init-ad-engine/
  * Description: A lightweight but powerful ad display engine for WordPress. Smart placement, no code required.
- * Version: 1.4
+ * Version: 1.5
  * Author: Init HTML
  * Author URI: https://inithtml.com/
  * Text Domain: init-ad-engine
  * Domain Path: /languages
  * Requires at least: 5.5
- * Tested up to: 6.9
+ * Tested up to: 7.0
  * Requires PHP: 7.4
  * License: GPLv2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -17,14 +17,14 @@
 
 defined('ABSPATH') || exit;
 
-define('INIT_PLUGIN_SUITE_AD_ENGINE_VERSION', '1.4');
-define('INIT_PLUGIN_SUITE_AD_ENGINE_SLUG', 'init-ad-engine');
-define('INIT_PLUGIN_SUITE_AD_ENGINE_OPTION', 'init_plugin_suite_ad_engine_settings');
-define('INIT_PLUGIN_SUITE_AD_ENGINE_URL', plugin_dir_url(__FILE__));
-define('INIT_PLUGIN_SUITE_AD_ENGINE_PATH', plugin_dir_path(__FILE__));
-define('INIT_PLUGIN_SUITE_AD_ENGINE_ASSETS_URL', INIT_PLUGIN_SUITE_AD_ENGINE_URL . 'assets/');
-define('INIT_PLUGIN_SUITE_AD_ENGINE_ASSETS_PATH', INIT_PLUGIN_SUITE_AD_ENGINE_PATH . 'assets/');
-define('INIT_PLUGIN_SUITE_AD_ENGINE_INCLUDES_PATH', INIT_PLUGIN_SUITE_AD_ENGINE_PATH . 'includes/');
+define('INIT_PLUGIN_SUITE_AD_ENGINE_VERSION',        '1.5');
+define('INIT_PLUGIN_SUITE_AD_ENGINE_SLUG',           'init-ad-engine');
+define('INIT_PLUGIN_SUITE_AD_ENGINE_OPTION',         'init_plugin_suite_ad_engine_settings');
+define('INIT_PLUGIN_SUITE_AD_ENGINE_URL',            plugin_dir_url(__FILE__));
+define('INIT_PLUGIN_SUITE_AD_ENGINE_PATH',           plugin_dir_path(__FILE__));
+define('INIT_PLUGIN_SUITE_AD_ENGINE_ASSETS_URL',     INIT_PLUGIN_SUITE_AD_ENGINE_URL . 'assets/');
+define('INIT_PLUGIN_SUITE_AD_ENGINE_ASSETS_PATH',    INIT_PLUGIN_SUITE_AD_ENGINE_PATH . 'assets/');
+define('INIT_PLUGIN_SUITE_AD_ENGINE_INCLUDES_PATH',  INIT_PLUGIN_SUITE_AD_ENGINE_PATH . 'includes/');
 define('INIT_PLUGIN_SUITE_AD_ENGINE_LANGUAGES_PATH', INIT_PLUGIN_SUITE_AD_ENGINE_PATH . 'languages/');
 
 /**
@@ -259,6 +259,12 @@ add_action('wp_enqueue_scripts', function () {
                     'selector' => isset($aff['blur_overlay']['selector']) ? $aff['blur_overlay']['selector'] : '',
                     'steps'    => isset($aff['blur_overlay']['steps']) ? $aff['blur_overlay']['steps'] : '',
                 ),
+            );
+
+            $aff_data = apply_filters(
+                'init_plugin_suite_ad_engine_affiliate_gate_data',
+                $aff_data,
+                $aff
             );
 
             wp_add_inline_script(

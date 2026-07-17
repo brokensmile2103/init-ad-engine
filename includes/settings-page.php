@@ -85,17 +85,6 @@ add_action('admin_enqueue_scripts', function($hook) {
                 . 'activateTab(tabs[0]);'
             . '}'
         . '});'
-        . 'jQuery(document).on("click",".upload-image-button",function(e){'
-            . 'e.preventDefault();'
-            . 'var button=jQuery(this);'
-            . 'var field=button.prev(\'input[type="text"]\');'
-            . 'var frame=wp.media({title:"Select or Upload Image",button:{text:"Use this image"},multiple:false});'
-            . 'frame.on("select",function(){'
-                . 'var attachment=frame.state().get("selection").first().toJSON();'
-                . 'if(field.length){field.val(attachment.url);}'
-            . '});'
-            . 'frame.open();'
-        . '});'
     . '})();';
 
     wp_add_inline_script('init-ad-engine-admin', $inline_js, 'after');
@@ -126,7 +115,7 @@ function init_plugin_suite_ad_engine_sanitize_settings($input) {
             // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
             $sanitized[$key] = is_string($value) ? $value : '';
         } elseif (in_array($key, $allowed_positions, true)) {
-            $sanitized[$key] = init_plugin_suite_ad_engine_sanitize_position_data($value);
+            $sanitized[$key] = init_plugin_suite_ad_engine_sanitize_position_data($value, $key);
         }
     }
 
@@ -154,9 +143,9 @@ function init_plugin_suite_ad_engine_sanitize_settings($input) {
 }
 
 // Sanitize individual position data
-function init_plugin_suite_ad_engine_sanitize_position_data($data) {
+function init_plugin_suite_ad_engine_sanitize_position_data($data, $position = '') {
     if (!is_array($data)) {
-        return [];
+        $data = [];
     }
 
     $sanitized = [];
@@ -190,6 +179,15 @@ function init_plugin_suite_ad_engine_sanitize_position_data($data) {
                 $sanitized[$field] = sanitize_text_field($value);
                 break;
         }
+    }
+
+    // 'target' is rendered as a checkbox ("Open in new tab?"), so unchecking
+    // it means the browser sends NO 'target' key at all in $_POST. Without
+    // this, an explicit "uncheck" gets silently lost and the frontend falls
+    // back to its '_blank' default as if the position was never configured.
+    // Popunder has no such checkbox, so it's excluded.
+    if ($position !== 'popunder' && !isset($sanitized['target'])) {
+        $sanitized['target'] = '';
     }
 
     return $sanitized;

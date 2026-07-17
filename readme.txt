@@ -2,9 +2,9 @@
 Contributors: brokensmile.2103
 Tags: ads, banner, popup, popunder, content locking
 Requires at least: 5.5
-Tested up to: 6.9
+Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 1.4
+Stable tag: 1.5
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -58,8 +58,11 @@ GitHub repository: [https://github.com/brokensmile2103/init-ad-engine](https://g
 - `init_plugin_suite_ad_engine_disable_all_ads`  
   Disable all ad injections globally. Default: `false`.
 
-- `init_ad_engine_should_enqueue_affiliate_gate`  
+- `init_plugin_suite_ad_engine_should_enqueue_affiliate_gate`  
   Control whether the Affiliate Gate scripts should be enqueued.
+
+- `init_plugin_suite_ad_engine_affiliate_gate_data`  
+  Modify Affiliate Gate configuration data (affiliate link, banner, mode, selectors, timing, blur overlay, etc.) before it is passed to JavaScript.
 
 == Installation ==
 
@@ -89,6 +92,17 @@ No. Version 1.0 focuses on display only. Analytics may be added in future update
 4. **Affiliate Gate Tab** – Full settings UI for content gating, steps, random modes, blur overlay, and banner configuration
 
 == Changelog ==
+
+= 1.5 – July 18, 2026 =
+- Fix: Removed a duplicated popunder handler in `script.js` that could cause the popunder to fire twice or mis-trigger against the configured click threshold
+- Fix: Popunder cooldown is now re-evaluated on every click instead of once at page load, so it no longer appears completely dead if the tab stays open across the cooldown window
+- Fix: Popunder storage access (localStorage/sessionStorage) is now wrapped defensively so it can't be silently broken by Safari private mode or storage-blocking extensions
+- Fix: Removed a duplicated `.upload-image-button` click handler that opened the media uploader frame twice
+- Fix: `uninstall.php` no longer relies on a plugin constant that is never defined during uninstall, so the settings option is now actually removed on uninstall
+- Fix: Unchecking "Open in new tab?" for a position now saves correctly instead of silently falling back to opening in a new tab
+- New: Popup Center (PC/Mobile) now shows a dimmed modal-style backdrop behind the ad; clicking the backdrop closes the popup
+- Improvement: `.init-ad-engine img` now has `max-width: 100%` so oversized banner images can no longer overflow their container
+- Docs: Corrected the documented affiliate-gate enqueue filter name to match the actual hook (`init_plugin_suite_ad_engine_should_enqueue_affiliate_gate`)
 
 = 1.4 – November 14, 2025 =
 - UX: Settings screen now **remembers the last active tab** and automatically restores it when you reopen the page
