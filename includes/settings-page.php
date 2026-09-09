@@ -146,6 +146,56 @@ function init_plugin_suite_ad_engine_sanitize_settings($input) {
         ];
     }
 
+    if (isset($input['floating_cta']) && is_array($input['floating_cta'])) {
+        $fcta_in = $input['floating_cta'];
+
+        $fcta_schedule_start = trim((string) ($fcta_in['schedule_start'] ?? ''));
+        $fcta_schedule_end   = trim((string) ($fcta_in['schedule_end'] ?? ''));
+
+        // One URL per line; blank/invalid lines are dropped so a stray
+        // typo can't leave a broken link in the rotation.
+        // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Unslashed and sanitized line-by-line below
+        $fcta_links_raw   = is_string($fcta_in['links'] ?? '') ? $fcta_in['links'] : '';
+        $fcta_links_lines = preg_split('/\r\n|\r|\n/', $fcta_links_raw);
+        $fcta_links_clean = [];
+        foreach ($fcta_links_lines as $fcta_line) {
+            $fcta_line = trim($fcta_line);
+            if ($fcta_line === '') {
+                continue;
+            }
+            $fcta_escaped = esc_url_raw($fcta_line);
+            if ($fcta_escaped !== '') {
+                $fcta_links_clean[] = $fcta_escaped;
+            }
+        }
+
+        $fcta_allowed_corners = ['bottom-right', 'bottom-left', 'top-right', 'top-left'];
+        $fcta_allowed_effects = ['none', 'heartbeat', 'pulse', 'shake', 'bounce', 'tada', 'swing'];
+        $fcta_allowed_icons   = ['none', 'tag', 'gift', 'fire', 'bell', 'cart', 'percent', 'star', 'lock', 'arrow'];
+        $fcta_allowed_devices = ['both', 'desktop', 'mobile'];
+
+        $sanitized['floating_cta'] = [
+            'enabled'             => (($fcta_in['enabled'] ?? '') === '1') ? '1' : '',
+            'corner'              => in_array($fcta_in['corner'] ?? '', $fcta_allowed_corners, true) ? $fcta_in['corner'] : 'bottom-right',
+            'offset_x'            => absint($fcta_in['offset_x'] ?? 20),
+            'offset_y'            => absint($fcta_in['offset_y'] ?? 20),
+            'effect'              => in_array($fcta_in['effect'] ?? '', $fcta_allowed_effects, true) ? $fcta_in['effect'] : 'heartbeat',
+            'icon'                => in_array($fcta_in['icon'] ?? '', $fcta_allowed_icons, true) ? $fcta_in['icon'] : 'tag',
+            'badge_text'          => sanitize_text_field($fcta_in['badge_text'] ?? ''),
+            'button_text'         => sanitize_text_field($fcta_in['button_text'] ?? ''),
+            'links'               => implode("\n", $fcta_links_clean),
+            'open_new_tab'        => (($fcta_in['open_new_tab'] ?? '') === '_blank') ? '_blank' : '',
+            'force_open_on_close' => (($fcta_in['force_open_on_close'] ?? '') === '1') ? '1' : '',
+            'bg_color'            => sanitize_hex_color($fcta_in['bg_color'] ?? '') ?: '#ee4d2d',
+            'text_color'          => sanitize_hex_color($fcta_in['text_color'] ?? '') ?: '#ffffff',
+            'badge_bg_color'      => sanitize_hex_color($fcta_in['badge_bg_color'] ?? '') ?: '#b71c1c',
+            'badge_text_color'    => sanitize_hex_color($fcta_in['badge_text_color'] ?? '') ?: '#ffffff',
+            'device'              => in_array($fcta_in['device'] ?? '', $fcta_allowed_devices, true) ? $fcta_in['device'] : 'both',
+            'schedule_start'      => preg_match('/^\d{4}-\d{2}-\d{2}$/', $fcta_schedule_start) ? $fcta_schedule_start : '',
+            'schedule_end'        => preg_match('/^\d{4}-\d{2}-\d{2}$/', $fcta_schedule_end) ? $fcta_schedule_end : '',
+        ];
+    }
+
     return $sanitized;
 }
 
@@ -467,6 +517,7 @@ function init_plugin_suite_ad_engine_render_settings_page() {
                 <a href="#tab-mobile" class="nav-tab"><?php esc_html_e('Mobile', 'init-ad-engine'); ?></a>
                 <a href="#tab-popunder" class="nav-tab"><?php esc_html_e('Popunder & Global', 'init-ad-engine'); ?></a>
                 <a href="#tab-affiliate" class="nav-tab"><?php esc_html_e('Affiliate Gate', 'init-ad-engine'); ?></a>
+                <a href="#tab-floating-cta" class="nav-tab"><?php esc_html_e('Floating Button', 'init-ad-engine'); ?></a>
             </h2>
 
             <div id="tab-pc" class="tab-content" style="display:block">
@@ -654,6 +705,223 @@ function init_plugin_suite_ad_engine_render_settings_page() {
                                    value="<?php echo esc_attr($settings['aff_gate']['blur_overlay']['steps'] ?? ''); ?>"
                                    class="regular-text" placeholder="e.g. 2,5,9" />
                             <p class="description"><?php esc_html_e('If all fields are set, a semi-transparent clickable overlay will appear on the selected element, only on specific views (e.g. 2,5,9).', 'init-ad-engine'); ?></p>
+                        </td>
+                    </tr>
+                </tbody></table>
+            </div>
+
+            <div id="tab-floating-cta" class="tab-content" style="display:none">
+                <table class="form-table" role="presentation"><tbody>
+                    <?php
+                    $fcta = isset($settings['floating_cta']) && is_array($settings['floating_cta']) ? $settings['floating_cta'] : [];
+
+                    $fcta_icons = [
+                        'none'    => __('None', 'init-ad-engine'),
+                        'tag'     => __('Tag / Voucher', 'init-ad-engine'),
+                        'gift'    => __('Gift', 'init-ad-engine'),
+                        'fire'    => __('Fire', 'init-ad-engine'),
+                        'bell'    => __('Bell', 'init-ad-engine'),
+                        'cart'    => __('Cart', 'init-ad-engine'),
+                        'percent' => __('Percent / Discount', 'init-ad-engine'),
+                        'star'    => __('Star', 'init-ad-engine'),
+                        'lock'    => __('Lock', 'init-ad-engine'),
+                        'arrow'   => __('Arrow Right', 'init-ad-engine'),
+                    ];
+
+                    $fcta_effects = [
+                        'none'      => __('None', 'init-ad-engine'),
+                        'heartbeat' => __('Heartbeat', 'init-ad-engine'),
+                        'pulse'     => __('Pulse', 'init-ad-engine'),
+                        'shake'     => __('Shake', 'init-ad-engine'),
+                        'bounce'    => __('Bounce', 'init-ad-engine'),
+                        'tada'      => __('Tada', 'init-ad-engine'),
+                        'swing'     => __('Swing', 'init-ad-engine'),
+                    ];
+
+                    $fcta_corners = [
+                        'bottom-right' => __('Bottom Right', 'init-ad-engine'),
+                        'bottom-left'  => __('Bottom Left', 'init-ad-engine'),
+                        'top-right'    => __('Top Right', 'init-ad-engine'),
+                        'top-left'     => __('Top Left', 'init-ad-engine'),
+                    ];
+                    ?>
+                    <tr>
+                        <th colspan="2">
+                            <h2><?php esc_html_e('Floating Button', 'init-ad-engine'); ?></h2>
+                            <p class="description"><?php esc_html_e('A floating, attention-grabbing call-to-action button pinned to a corner of the screen.', 'init-ad-engine'); ?></p>
+                        </th>
+                    </tr>
+
+                    <tr>
+                        <th><label for="fcta_enabled"><?php esc_html_e('Enable', 'init-ad-engine'); ?></label></th>
+                        <td>
+                            <label>
+                                <input type="checkbox" id="fcta_enabled" name="init_ad_engine[floating_cta][enabled]"
+                                       value="1" <?php checked($fcta['enabled'] ?? '', '1'); ?> />
+                                <?php esc_html_e('Show the floating button on the site', 'init-ad-engine'); ?>
+                            </label>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th><label for="fcta_corner"><?php esc_html_e('Corner Position', 'init-ad-engine'); ?></label></th>
+                        <td>
+                            <?php $fcta_corner_val = $fcta['corner'] ?? 'bottom-right'; ?>
+                            <select id="fcta_corner" name="init_ad_engine[floating_cta][corner]">
+                                <?php foreach ($fcta_corners as $fcta_corner_key => $fcta_corner_label): ?>
+                                    <option value="<?php echo esc_attr($fcta_corner_key); ?>" <?php selected($fcta_corner_val, $fcta_corner_key); ?>>
+                                        <?php echo esc_html($fcta_corner_label); ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th><label for="fcta_offset_x"><?php esc_html_e('Edge Spacing (px)', 'init-ad-engine'); ?></label></th>
+                        <td>
+                            <?php esc_html_e('Horizontal:', 'init-ad-engine'); ?>
+                            <input type="number" id="fcta_offset_x" min="0" step="1"
+                                   name="init_ad_engine[floating_cta][offset_x]"
+                                   value="<?php echo esc_attr($fcta['offset_x'] ?? 20); ?>"
+                                   class="small-text" />
+                            <?php esc_html_e('Vertical:', 'init-ad-engine'); ?>
+                            <input type="number" min="0" step="1"
+                                   name="init_ad_engine[floating_cta][offset_y]"
+                                   value="<?php echo esc_attr($fcta['offset_y'] ?? 20); ?>"
+                                   class="small-text" />
+                            <p class="description"><?php esc_html_e('Distance from the selected corner\'s edges.', 'init-ad-engine'); ?></p>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th><label for="fcta_effect"><?php esc_html_e('Attention Effect', 'init-ad-engine'); ?></label></th>
+                        <td>
+                            <?php $fcta_effect_val = $fcta['effect'] ?? 'heartbeat'; ?>
+                            <select id="fcta_effect" name="init_ad_engine[floating_cta][effect]">
+                                <?php foreach ($fcta_effects as $fcta_effect_key => $fcta_effect_label): ?>
+                                    <option value="<?php echo esc_attr($fcta_effect_key); ?>" <?php selected($fcta_effect_val, $fcta_effect_key); ?>>
+                                        <?php echo esc_html($fcta_effect_label); ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                            <p class="description"><?php esc_html_e('Built-in animation to help the button catch the visitor\'s eye.', 'init-ad-engine'); ?></p>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th><label for="fcta_icon"><?php esc_html_e('Icon', 'init-ad-engine'); ?></label></th>
+                        <td>
+                            <?php $fcta_icon_val = $fcta['icon'] ?? 'tag'; ?>
+                            <select id="fcta_icon" name="init_ad_engine[floating_cta][icon]">
+                                <?php foreach ($fcta_icons as $fcta_icon_key => $fcta_icon_label): ?>
+                                    <option value="<?php echo esc_attr($fcta_icon_key); ?>" <?php selected($fcta_icon_val, $fcta_icon_key); ?>>
+                                        <?php echo esc_html($fcta_icon_label); ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                            <p class="description"><?php esc_html_e('Built-in SVG icon shown next to the button text.', 'init-ad-engine'); ?></p>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th><label for="fcta_badge_text"><?php esc_html_e('Badge Text (optional)', 'init-ad-engine'); ?></label></th>
+                        <td>
+                            <input type="text" id="fcta_badge_text" name="init_ad_engine[floating_cta][badge_text]"
+                                   value="<?php echo esc_attr($fcta['badge_text'] ?? ''); ?>"
+                                   placeholder="<?php esc_attr_e('e.g. VOUCHER 50%', 'init-ad-engine'); ?>"
+                                   class="regular-text" />
+                            <p class="description"><?php esc_html_e('Small badge shown above the button. Leave empty to hide it.', 'init-ad-engine'); ?></p>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th><label for="fcta_button_text"><?php esc_html_e('Button Text', 'init-ad-engine'); ?></label></th>
+                        <td>
+                            <input type="text" id="fcta_button_text" name="init_ad_engine[floating_cta][button_text]"
+                                   value="<?php echo esc_attr($fcta['button_text'] ?? ''); ?>"
+                                   placeholder="<?php esc_attr_e('e.g. Grab the Deal', 'init-ad-engine'); ?>"
+                                   class="regular-text" />
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th><label for="fcta_links"><?php esc_html_e('Links', 'init-ad-engine'); ?></label></th>
+                        <td>
+                            <textarea id="fcta_links" name="init_ad_engine[floating_cta][links]" rows="5"
+                                      class="large-text code"
+                                      placeholder="https://example.com/link-1&#10;https://example.com/link-2"><?php echo esc_textarea($fcta['links'] ?? ''); ?></textarea>
+                            <p class="description"><?php esc_html_e('One link per line. When more than one link is set, a random one is shown on each page view.', 'init-ad-engine'); ?></p>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th><label for="fcta_open_new_tab"><?php esc_html_e('Open in new tab?', 'init-ad-engine'); ?></label></th>
+                        <td>
+                            <label>
+                                <input type="checkbox" id="fcta_open_new_tab" name="init_ad_engine[floating_cta][open_new_tab]"
+                                       value="_blank" <?php checked($fcta['open_new_tab'] ?? '_blank', '_blank'); ?> />
+                                <?php esc_html_e('Yes, open in new tab', 'init-ad-engine'); ?>
+                            </label>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th><label for="fcta_force_open_on_close"><?php esc_html_e('Close (x) button action', 'init-ad-engine'); ?></label></th>
+                        <td>
+                            <label>
+                                <input type="checkbox" id="fcta_force_open_on_close" name="init_ad_engine[floating_cta][force_open_on_close]"
+                                       value="1" <?php checked($fcta['force_open_on_close'] ?? '', '1'); ?> />
+                                <?php esc_html_e('Also open the link (in a new tab) when the visitor dismisses this button with the x button', 'init-ad-engine'); ?>
+                            </label>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th><label for="fcta_bg_color"><?php esc_html_e('Button Colors', 'init-ad-engine'); ?></label></th>
+                        <td>
+                            <?php esc_html_e('Background:', 'init-ad-engine'); ?>
+                            <input type="color" id="fcta_bg_color" name="init_ad_engine[floating_cta][bg_color]"
+                                   value="<?php echo esc_attr($fcta['bg_color'] ?? '#ee4d2d'); ?>" />
+                            <?php esc_html_e('Text:', 'init-ad-engine'); ?>
+                            <input type="color" name="init_ad_engine[floating_cta][text_color]"
+                                   value="<?php echo esc_attr($fcta['text_color'] ?? '#ffffff'); ?>" />
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th><label for="fcta_badge_bg_color"><?php esc_html_e('Badge Colors', 'init-ad-engine'); ?></label></th>
+                        <td>
+                            <?php esc_html_e('Background:', 'init-ad-engine'); ?>
+                            <input type="color" id="fcta_badge_bg_color" name="init_ad_engine[floating_cta][badge_bg_color]"
+                                   value="<?php echo esc_attr($fcta['badge_bg_color'] ?? '#b71c1c'); ?>" />
+                            <?php esc_html_e('Text:', 'init-ad-engine'); ?>
+                            <input type="color" name="init_ad_engine[floating_cta][badge_text_color]"
+                                   value="<?php echo esc_attr($fcta['badge_text_color'] ?? '#ffffff'); ?>" />
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th><label for="fcta_device"><?php esc_html_e('Device', 'init-ad-engine'); ?></label></th>
+                        <td>
+                            <?php $fcta_device_val = $fcta['device'] ?? 'both'; ?>
+                            <select id="fcta_device" name="init_ad_engine[floating_cta][device]">
+                                <option value="both" <?php selected($fcta_device_val, 'both'); ?>><?php esc_html_e('Desktop & Mobile', 'init-ad-engine'); ?></option>
+                                <option value="desktop" <?php selected($fcta_device_val, 'desktop'); ?>><?php esc_html_e('Desktop only', 'init-ad-engine'); ?></option>
+                                <option value="mobile" <?php selected($fcta_device_val, 'mobile'); ?>><?php esc_html_e('Mobile only', 'init-ad-engine'); ?></option>
+                            </select>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th><label><?php esc_html_e('Schedule (optional)', 'init-ad-engine'); ?></label></th>
+                        <td>
+                            <input type="date" name="init_ad_engine[floating_cta][schedule_start]"
+                                   value="<?php echo esc_attr($fcta['schedule_start'] ?? ''); ?>" />
+                            <?php esc_html_e('to', 'init-ad-engine'); ?>
+                            <input type="date" name="init_ad_engine[floating_cta][schedule_end]"
+                                   value="<?php echo esc_attr($fcta['schedule_end'] ?? ''); ?>" />
+                            <p class="description"><?php esc_html_e('Leave both empty to run with no date limit. If only one side is set, the other side is unlimited.', 'init-ad-engine'); ?></p>
                         </td>
                     </tr>
                 </tbody></table>

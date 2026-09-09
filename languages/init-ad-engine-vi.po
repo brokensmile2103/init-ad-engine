@@ -1,226 +1,547 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Init Ad Engine\n"
-"Language: vi\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-09-09T17:19:30+00:00\n"
+"PO-Revision-Date: 2026-09-09T17:19:30+00:00\n"
+"Language: vi\n"
 
+#. Plugin Name of the plugin
+#: init-ad-engine.php
+#: includes/settings-page.php:9
 msgid "Init Ad Engine"
 msgstr "Init Ad Engine"
 
+#. Description of the plugin
+#: init-ad-engine.php
 msgid "A lightweight but powerful ad display engine for WordPress. Smart placement, no code required."
 msgstr "Một công cụ hiển thị quảng cáo nhẹ nhưng mạnh mẽ cho WordPress. Đặt vị trí thông minh, không cần viết mã."
 
+#: includes/settings-page.php:8
+#: includes/settings-page.php:511
 msgid "Init Ad Engine Settings"
 msgstr "Cài đặt Init Ad Engine"
 
+#: init-ad-engine.php:505
 msgid "Settings"
 msgstr "Cài đặt"
 
+#: includes/settings-page.php:507
 msgid "Settings saved successfully."
 msgstr "Lưu cài đặt thành công."
 
+#: includes/settings-page.php:464
 msgid "Billboard (below menu, desktop only)"
 msgstr "Billboard (dưới menu, chỉ hiển thị trên máy tính)"
 
+#: includes/settings-page.php:465
 msgid "Balloon Left (bottom-left corner)"
 msgstr "Balloon bên trái (góc dưới bên trái)"
 
+#: includes/settings-page.php:466
 msgid "Balloon Right (bottom-right corner)"
 msgstr "Balloon bên phải (góc dưới bên phải)"
 
+#: includes/settings-page.php:467
 msgid "Float Left (left sidebar)"
 msgstr "Float trái (sidebar bên trái)"
 
+#: includes/settings-page.php:468
 msgid "Float Right (right sidebar)"
 msgstr "Float phải (sidebar bên phải)"
 
+#: includes/settings-page.php:469
 msgid "Catfish Top (sticky top, desktop only)"
 msgstr "Catfish trên (dính phía trên, chỉ máy tính)"
 
+#: includes/settings-page.php:470
 msgid "Catfish Bottom (sticky bottom, desktop only)"
 msgstr "Catfish dưới (dính phía dưới, chỉ máy tính)"
 
+#: includes/settings-page.php:471
 msgid "Popup Center PC (desktop only)"
 msgstr "Popup giữa màn hình (PC)"
 
+#: includes/settings-page.php:472
 msgid "Popup Center Mobile (mobile only)"
 msgstr "Popup giữa màn hình (Mobile)"
 
+#: includes/settings-page.php:473
 msgid "Sticky Top (mobile only)"
 msgstr "Sticky trên (chỉ hiển thị trên điện thoại)"
 
+#: includes/settings-page.php:474
 msgid "Sticky Bottom (mobile only)"
 msgstr "Sticky dưới (chỉ hiển thị trên điện thoại)"
 
+#: includes/settings-page.php:475
 msgid "Mini Billboard (mobile only)"
 msgstr "Mini Billboard (chỉ điện thoại)"
 
+#: includes/settings-page.php:476
 msgid "Before Content (desktop)"
 msgstr "Trước nội dung (PC)"
 
+#: includes/settings-page.php:477
 msgid "Before Content (mobile)"
 msgstr "Trước nội dung (Mobile)"
 
+#: includes/settings-page.php:478
 msgid "After Content (desktop)"
 msgstr "Sau nội dung (PC)"
 
+#: includes/settings-page.php:479
 msgid "After Content (mobile)"
 msgstr "Sau nội dung (Mobile)"
 
+#: includes/settings-page.php:480
 msgid "Popunder (new tab on first click)"
 msgstr "Popunder (mở tab mới khi click lần đầu)"
 
+#: includes/settings-page.php:285
 msgid "This ad will only appear on mobile devices."
 msgstr "Chỉ hiển thị trên thiết bị di động."
 
+#: includes/settings-page.php:288
 msgid "This ad will only appear on desktop."
 msgstr "Chỉ hiển thị trên máy tính."
 
+#: includes/settings-page.php:293
 msgid "Recommended size:"
 msgstr "Kích thước đề xuất:"
 
+#: includes/settings-page.php:344
 msgid "Banner image URL"
 msgstr "Đường dẫn hình ảnh banner"
 
+#: includes/settings-page.php:315
+#: includes/settings-page.php:353
 msgid "Target URL"
 msgstr "Đường dẫn khi click"
 
+#: includes/settings-page.php:361
+#: includes/settings-page.php:859
 msgid "Open in new tab?"
 msgstr "Mở trong tab mới?"
 
+#: includes/settings-page.php:367
+#: includes/settings-page.php:864
 msgid "Yes, open in new tab"
 msgstr "Có, mở trong tab mới"
 
+#: includes/settings-page.php:394
 msgid "Fallback ad code"
 msgstr "Mã quảng cáo thay thế"
 
+#: includes/settings-page.php:398
 msgid "Optional HTML/JS ad code shown when no banner is set."
 msgstr "Mã quảng cáo HTML/JS sẽ hiển thị nếu không có banner."
 
+#: includes/settings-page.php:424
 msgid "Display Behavior"
 msgstr "Cách hiển thị"
 
+#: includes/settings-page.php:429
 msgid "Show immediately on page load"
 msgstr "Hiển thị ngay khi tải trang"
 
+#: includes/settings-page.php:432
 msgid "Show after delay (seconds)"
 msgstr "Hiển thị sau một khoảng trễ (giây)"
 
+#: includes/settings-page.php:435
 msgid "Show on exit intent"
 msgstr "Hiển thị khi chuẩn bị thoát trang"
 
+#: includes/settings-page.php:442
 msgid "Delay in seconds"
 msgstr "Trễ (giây)"
 
+#: includes/settings-page.php:443
 msgid "Select how and when the popup should appear."
 msgstr "Chọn cách và thời điểm popup xuất hiện."
 
+#: includes/settings-page.php:323
+#: includes/settings-page.php:447
 msgid "Time between triggers (hours)"
 msgstr "Thời gian giữa các lần hiển thị (giờ)"
 
+#: includes/settings-page.php:453
 msgid "Minimum hours before this popup can reappear (per device/browser)."
 msgstr "Khoảng cách tối thiểu giữa hai lần hiển thị popup trên cùng thiết bị."
 
+#: includes/settings-page.php:329
 msgid "Minimum hours before popunder can trigger again."
 msgstr "Thời gian tối thiểu trước khi popunder được kích hoạt lại."
 
+#: includes/settings-page.php:333
 msgid "Trigger on click number"
 msgstr "Kích hoạt ở lần click thứ"
 
+#: includes/settings-page.php:339
 msgid "Popunder will activate on the N-th click."
 msgstr "Popunder sẽ hiển thị ở lần click thứ N."
 
+#: includes/settings-page.php:560
 msgid "Code to insert inside <head>."
 msgstr "Mã chèn vào trong thẻ <head>."
 
+#: includes/settings-page.php:567
 msgid "Code to insert before </body>."
 msgstr "Mã chèn trước thẻ </body>."
 
+#: includes/settings-page.php:557
 msgid "Header Code"
 msgstr "Mã chèn vào phần đầu (header)"
 
+#: includes/settings-page.php:564
 msgid "Footer Code"
 msgstr "Mã chèn vào cuối trang (footer)"
 
+#: includes/settings-page.php:930
 msgid "Save Settings"
 msgstr "Lưu cài đặt"
 
+#: includes/settings-page.php:519
 msgid "Affiliate Gate"
 msgstr "Affiliate Gate"
 
+#: includes/settings-page.php:576
 msgid "Content Selector"
 msgstr "Trình chọn nội dung"
 
+#: includes/settings-page.php:582
 msgid "CSS selector of the content block to gate (e.g. .entry-content)."
 msgstr "CSS selector của khối nội dung cần khóa (ví dụ: .entry-content)."
 
+#: includes/settings-page.php:587
 msgid "Affiliate Link (Required)"
 msgstr "Liên kết Affiliate (bắt buộc)"
 
+#: includes/settings-page.php:594
 msgid "Enter multiple links separated by commas (,) to display them randomly."
 msgstr "Nhập nhiều liên kết, cách nhau bằng dấu phẩy (,) để hiển thị ngẫu nhiên."
 
+#: includes/settings-page.php:600
 msgid "Banner Image URL"
 msgstr "Đường dẫn ảnh banner"
 
+#: includes/settings-page.php:349
+#: includes/settings-page.php:606
 msgid "Choose Image"
 msgstr "Chọn ảnh"
 
+#: includes/settings-page.php:611
 msgid "Intro Text"
 msgstr "Nội dung giới thiệu"
 
+#: includes/settings-page.php:618
 msgid "Outro Text"
 msgstr "Nội dung kết thúc"
 
+#: includes/settings-page.php:625
 msgid "Display Mode"
 msgstr "Chế độ hiển thị"
 
+#: includes/settings-page.php:631
 msgid "Show every time (unless clicked in this post)"
 msgstr "Luôn hiển thị (trừ khi đã bấm trong bài này)"
 
+#: includes/settings-page.php:636
 msgid "Hide after click for X hours"
 msgstr "Ẩn sau khi bấm trong X giờ"
 
+#: includes/settings-page.php:641
 msgid "Show randomly (by % chance)"
 msgstr "Hiển thị ngẫu nhiên (theo % cơ hội)"
 
+#: includes/settings-page.php:650
 msgid "Show every X views"
 msgstr "Hiển thị sau mỗi X lượt xem"
 
+#: includes/settings-page.php:659
 msgid "Show on specific views (e.g. 1,3,9)"
 msgstr "Hiển thị ở các lượt xem cụ thể (vd: 1,3,9)"
 
+#: includes/settings-page.php:670
 msgid "Expire Duration (Hours)"
 msgstr "Thời gian ẩn (giờ)"
 
+#: includes/settings-page.php:676
 msgid "Only applies if \"Show every time\" or \"Hide after click\" or \"Show on custom pages\" is selected."
 msgstr "Chỉ áp dụng nếu chọn \"Luôn hiển thị\", \"Ẩn sau khi bấm\" hoặc \"Hiển thị theo bước tùy chọn\"."
 
+#: includes/settings-page.php:693
 msgid "Blur Overlay Link & Selector"
 msgstr "Liên kết & vùng cần chèn lớp mờ"
 
+#: includes/settings-page.php:707
 msgid "If all fields are set, a semi-transparent clickable overlay will appear on the selected element, only on specific views (e.g. 2,5,9)."
 msgstr "Nếu điền đầy đủ, lớp mờ có thể nhấp sẽ hiển thị trên phần tử đã chọn, chỉ ở các lượt xem cụ thể (vd: 2,5,9)."
 
+#: includes/settings-page.php:302
+#: includes/settings-page.php:681
+#: includes/settings-page.php:917
 msgid "Schedule (optional)"
 msgstr "Lịch chạy (tùy chọn)"
 
+#: includes/settings-page.php:306
+#: includes/settings-page.php:685
+#: includes/settings-page.php:921
 msgid "to"
 msgstr "đến"
 
+#: includes/settings-page.php:309
+#: includes/settings-page.php:688
+#: includes/settings-page.php:924
 msgid "Leave both empty to run with no date limit. If only one side is set, the other side is unlimited."
 msgstr "Để trống cả hai nếu muốn chạy không giới hạn ngày. Nếu chỉ điền một bên, bên còn lại sẽ không giới hạn."
 
+#: includes/settings-page.php:411
 msgid "Frequency cap (hours)"
 msgstr "Giới hạn tần suất hiển thị (giờ)"
 
+#: includes/settings-page.php:417
 msgid "Minimum hours before this ad shows again to the same browser. Leave 0 to show on every page view (default behavior)."
 msgstr "Số giờ tối thiểu trước khi quảng cáo này hiển thị lại cho cùng một trình duyệt. Để 0 để hiển thị ở mọi lượt xem trang (mặc định)."
 
+#: includes/settings-page.php:382
+#: includes/settings-page.php:870
 msgid "Close (x) button action"
 msgstr "Hành động khi bấm nút đóng (x)"
 
+#: includes/settings-page.php:387
 msgid "Also open the Target URL (in a new tab) when the visitor dismisses this ad with the x button"
 msgstr "Đồng thời mở Đường dẫn khi click (trong tab mới) khi người dùng đóng quảng cáo này bằng nút x"
+
+#. Plugin URI of the plugin
+#: init-ad-engine.php
+msgid "https://inithtml.com/plugin/init-ad-engine/"
+msgstr ""
+
+#. Author of the plugin
+#: init-ad-engine.php
+msgid "Init HTML"
+msgstr ""
+
+#. Author URI of the plugin
+#: init-ad-engine.php
+msgid "https://inithtml.com/"
+msgstr ""
+
+#: includes/settings-page.php:516
+msgid "PC"
+msgstr ""
+
+#: includes/settings-page.php:517
+msgid "Mobile"
+msgstr ""
+
+#: includes/settings-page.php:518
+msgid "Popunder & Global"
+msgstr ""
+
+#: includes/settings-page.php:520
+#: includes/settings-page.php:750
+msgid "Floating Button"
+msgstr "Nút nổi"
+
+#: includes/settings-page.php:719
+#: includes/settings-page.php:732
+msgid "None"
+msgstr "Không"
+
+#: includes/settings-page.php:720
+msgid "Tag / Voucher"
+msgstr "Nhãn / Voucher"
+
+#: includes/settings-page.php:721
+msgid "Gift"
+msgstr "Quà tặng"
+
+#: includes/settings-page.php:722
+msgid "Fire"
+msgstr "Lửa"
+
+#: includes/settings-page.php:723
+msgid "Bell"
+msgstr "Chuông"
+
+#: includes/settings-page.php:724
+msgid "Cart"
+msgstr "Giỏ hàng"
+
+#: includes/settings-page.php:725
+msgid "Percent / Discount"
+msgstr "Phần trăm / Giảm giá"
+
+#: includes/settings-page.php:726
+msgid "Star"
+msgstr "Ngôi sao"
+
+#: includes/settings-page.php:727
+msgid "Lock"
+msgstr "Ổ khóa"
+
+#: includes/settings-page.php:728
+msgid "Arrow Right"
+msgstr "Mũi tên phải"
+
+#: includes/settings-page.php:733
+msgid "Heartbeat"
+msgstr "Nhịp tim"
+
+#: includes/settings-page.php:734
+msgid "Pulse"
+msgstr "Nhấp nháy"
+
+#: includes/settings-page.php:735
+msgid "Shake"
+msgstr "Rung lắc"
+
+#: includes/settings-page.php:736
+msgid "Bounce"
+msgstr "Nảy lên"
+
+#: includes/settings-page.php:737
+msgid "Tada"
+msgstr "Tada"
+
+#: includes/settings-page.php:738
+msgid "Swing"
+msgstr "Đung đưa"
+
+#: includes/settings-page.php:742
+msgid "Bottom Right"
+msgstr "Dưới - Phải"
+
+#: includes/settings-page.php:743
+msgid "Bottom Left"
+msgstr "Dưới - Trái"
+
+#: includes/settings-page.php:744
+msgid "Top Right"
+msgstr "Trên - Phải"
+
+#: includes/settings-page.php:745
+msgid "Top Left"
+msgstr "Trên - Trái"
+
+#: includes/settings-page.php:751
+msgid "A floating, attention-grabbing call-to-action button pinned to a corner of the screen."
+msgstr "Một nút kêu gọi hành động (CTA) nổi, thu hút sự chú ý, được ghim ở một góc màn hình."
+
+#: includes/settings-page.php:756
+msgid "Enable"
+msgstr "Bật"
+
+#: includes/settings-page.php:761
+msgid "Show the floating button on the site"
+msgstr "Hiển thị nút nổi trên website"
+
+#: includes/settings-page.php:767
+msgid "Corner Position"
+msgstr "Vị trí góc"
+
+#: includes/settings-page.php:781
+msgid "Edge Spacing (px)"
+msgstr "Khoảng cách với viền (px)"
+
+#: includes/settings-page.php:783
+msgid "Horizontal:"
+msgstr "Ngang:"
+
+#: includes/settings-page.php:788
+msgid "Vertical:"
+msgstr "Dọc:"
+
+#: includes/settings-page.php:793
+msgid "Distance from the selected corner's edges."
+msgstr "Khoảng cách tính từ các viền của góc đã chọn."
+
+#: includes/settings-page.php:798
+msgid "Attention Effect"
+msgstr "Hiệu ứng gây chú ý"
+
+#: includes/settings-page.php:808
+msgid "Built-in animation to help the button catch the visitor's eye."
+msgstr "Hiệu ứng chuyển động dựng sẵn giúp nút thu hút ánh nhìn của khách truy cập."
+
+#: includes/settings-page.php:813
+msgid "Icon"
+msgstr "Biểu tượng"
+
+#: includes/settings-page.php:823
+msgid "Built-in SVG icon shown next to the button text."
+msgstr "Biểu tượng SVG dựng sẵn hiển thị cạnh nội dung nút."
+
+#: includes/settings-page.php:828
+msgid "Badge Text (optional)"
+msgstr "Nội dung huy hiệu (tùy chọn)"
+
+#: includes/settings-page.php:832
+msgid "e.g. VOUCHER 50%"
+msgstr "vd. VOUCHER 50%"
+
+#: includes/settings-page.php:834
+msgid "Small badge shown above the button. Leave empty to hide it."
+msgstr "Huy hiệu nhỏ hiển thị phía trên nút. Để trống nếu không muốn hiển thị."
+
+#: includes/settings-page.php:839
+msgid "Button Text"
+msgstr "Nội dung nút"
+
+#: includes/settings-page.php:843
+msgid "e.g. Grab the Deal"
+msgstr "vd. Săn Deal Ngay"
+
+#: includes/settings-page.php:849
+msgid "Links"
+msgstr "Liên kết"
+
+#: includes/settings-page.php:854
+msgid "One link per line. When more than one link is set, a random one is shown on each page view."
+msgstr "Mỗi dòng 1 liên kết. Nếu có nhiều hơn 1 liên kết, hệ thống sẽ hiển thị ngẫu nhiên một liên kết ở mỗi lượt xem trang."
+
+#: includes/settings-page.php:875
+msgid "Also open the link (in a new tab) when the visitor dismisses this button with the x button"
+msgstr "Đồng thời mở liên kết (ở tab mới) khi khách truy cập đóng nút này bằng nút x"
+
+#: includes/settings-page.php:881
+msgid "Button Colors"
+msgstr "Màu sắc nút"
+
+#: includes/settings-page.php:883
+#: includes/settings-page.php:895
+msgid "Background:"
+msgstr "Nền:"
+
+#: includes/settings-page.php:886
+#: includes/settings-page.php:898
+msgid "Text:"
+msgstr "Chữ:"
+
+#: includes/settings-page.php:893
+msgid "Badge Colors"
+msgstr "Màu sắc huy hiệu"
+
+#: includes/settings-page.php:905
+msgid "Device"
+msgstr "Thiết bị"
+
+#: includes/settings-page.php:909
+msgid "Desktop & Mobile"
+msgstr "Máy tính & Di động"
+
+#: includes/settings-page.php:910
+msgid "Desktop only"
+msgstr "Chỉ máy tính"
+
+#: includes/settings-page.php:911
+msgid "Mobile only"
+msgstr "Chỉ di động"

@@ -1,226 +1,550 @@
+# Copyright (C) 2026 Init HTML
+# This file is distributed under the GPLv2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Init Ad Engine\n"
-"Language: vi\n"
+"Project-Id-Version: Init Ad Engine 1.7\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/init-ad-engine\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-09-09T17:19:23+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: init-ad-engine\n"
 
+#. Plugin Name of the plugin
+#: init-ad-engine.php
+#: includes/settings-page.php:9
 msgid "Init Ad Engine"
 msgstr ""
 
+#. Plugin URI of the plugin
+#: init-ad-engine.php
+msgid "https://inithtml.com/plugin/init-ad-engine/"
+msgstr ""
+
+#. Description of the plugin
+#: init-ad-engine.php
 msgid "A lightweight but powerful ad display engine for WordPress. Smart placement, no code required."
 msgstr ""
 
+#. Author of the plugin
+#: init-ad-engine.php
+msgid "Init HTML"
+msgstr ""
+
+#. Author URI of the plugin
+#: init-ad-engine.php
+msgid "https://inithtml.com/"
+msgstr ""
+
+#: includes/settings-page.php:8
+#: includes/settings-page.php:511
 msgid "Init Ad Engine Settings"
 msgstr ""
 
-msgid "Settings"
-msgstr ""
-
-msgid "Settings saved successfully."
-msgstr ""
-
-msgid "Billboard (below menu, desktop only)"
-msgstr ""
-
-msgid "Balloon Left (bottom-left corner)"
-msgstr ""
-
-msgid "Balloon Right (bottom-right corner)"
-msgstr ""
-
-msgid "Float Left (left sidebar)"
-msgstr ""
-
-msgid "Float Right (right sidebar)"
-msgstr ""
-
-msgid "Catfish Top (sticky top, desktop only)"
-msgstr ""
-
-msgid "Catfish Bottom (sticky bottom, desktop only)"
-msgstr ""
-
-msgid "Popup Center PC (desktop only)"
-msgstr ""
-
-msgid "Popup Center Mobile (mobile only)"
-msgstr ""
-
-msgid "Sticky Top (mobile only)"
-msgstr ""
-
-msgid "Sticky Bottom (mobile only)"
-msgstr ""
-
-msgid "Mini Billboard (mobile only)"
-msgstr ""
-
-msgid "Before Content (desktop)"
-msgstr ""
-
-msgid "Before Content (mobile)"
-msgstr ""
-
-msgid "After Content (desktop)"
-msgstr ""
-
-msgid "After Content (mobile)"
-msgstr ""
-
-msgid "Popunder (new tab on first click)"
-msgstr ""
-
+#: includes/settings-page.php:285
 msgid "This ad will only appear on mobile devices."
 msgstr ""
 
+#: includes/settings-page.php:288
 msgid "This ad will only appear on desktop."
 msgstr ""
 
+#: includes/settings-page.php:293
 msgid "Recommended size:"
 msgstr ""
 
-msgid "Banner image URL"
-msgstr ""
-
-msgid "Target URL"
-msgstr ""
-
-msgid "Open in new tab?"
-msgstr ""
-
-msgid "Yes, open in new tab"
-msgstr ""
-
-msgid "Fallback ad code"
-msgstr ""
-
-msgid "Optional HTML/JS ad code shown when no banner is set."
-msgstr ""
-
-msgid "Display Behavior"
-msgstr ""
-
-msgid "Show immediately on page load"
-msgstr ""
-
-msgid "Show after delay (seconds)"
-msgstr ""
-
-msgid "Show on exit intent"
-msgstr ""
-
-msgid "Delay in seconds"
-msgstr ""
-
-msgid "Select how and when the popup should appear."
-msgstr ""
-
-msgid "Time between triggers (hours)"
-msgstr ""
-
-msgid "Minimum hours before this popup can reappear (per device/browser)."
-msgstr ""
-
-msgid "Minimum hours before popunder can trigger again."
-msgstr ""
-
-msgid "Trigger on click number"
-msgstr ""
-
-msgid "Popunder will activate on the N-th click."
-msgstr ""
-
-msgid "Code to insert inside <head>."
-msgstr ""
-
-msgid "Code to insert before </body>."
-msgstr ""
-
-msgid "Header Code"
-msgstr ""
-
-msgid "Footer Code"
-msgstr ""
-
-msgid "Save Settings"
-msgstr ""
-
-msgid "Affiliate Gate"
-msgstr ""
-
-msgid "Content Selector"
-msgstr ""
-
-msgid "CSS selector of the content block to gate (e.g. .entry-content)."
-msgstr ""
-
-msgid "Affiliate Link (Required)"
-msgstr ""
-
-msgid "Enter multiple links separated by commas (,) to display them randomly."
-msgstr ""
-
-msgid "Banner Image URL"
-msgstr ""
-
-msgid "Choose Image"
-msgstr ""
-
-msgid "Intro Text"
-msgstr ""
-
-msgid "Outro Text"
-msgstr ""
-
-msgid "Display Mode"
-msgstr ""
-
-msgid "Show every time (unless clicked in this post)"
-msgstr ""
-
-msgid "Hide after click for X hours"
-msgstr ""
-
-msgid "Show randomly (by % chance)"
-msgstr ""
-
-msgid "Show every X views"
-msgstr ""
-
-msgid "Show on specific views (e.g. 1,3,9)"
-msgstr ""
-
-msgid "Expire Duration (Hours)"
-msgstr ""
-
-msgid "Only applies if \"Show every time\" or \"Hide after click\" or \"Show on custom pages\" is selected."
-msgstr ""
-
-msgid "Blur Overlay Link & Selector"
-msgstr ""
-
-msgid "If all fields are set, a semi-transparent clickable overlay will appear on the selected element, only on specific views (e.g. 2,5,9)."
-msgstr ""
-
+#: includes/settings-page.php:302
+#: includes/settings-page.php:681
+#: includes/settings-page.php:917
 msgid "Schedule (optional)"
 msgstr ""
 
+#: includes/settings-page.php:306
+#: includes/settings-page.php:685
+#: includes/settings-page.php:921
 msgid "to"
 msgstr ""
 
+#: includes/settings-page.php:309
+#: includes/settings-page.php:688
+#: includes/settings-page.php:924
 msgid "Leave both empty to run with no date limit. If only one side is set, the other side is unlimited."
 msgstr ""
 
-msgid "Frequency cap (hours)"
+#: includes/settings-page.php:315
+#: includes/settings-page.php:353
+msgid "Target URL"
 msgstr ""
 
-msgid "Minimum hours before this ad shows again to the same browser. Leave 0 to show on every page view (default behavior)."
+#: includes/settings-page.php:323
+#: includes/settings-page.php:447
+msgid "Time between triggers (hours)"
 msgstr ""
 
+#: includes/settings-page.php:329
+msgid "Minimum hours before popunder can trigger again."
+msgstr ""
+
+#: includes/settings-page.php:333
+msgid "Trigger on click number"
+msgstr ""
+
+#: includes/settings-page.php:339
+msgid "Popunder will activate on the N-th click."
+msgstr ""
+
+#: includes/settings-page.php:344
+msgid "Banner image URL"
+msgstr ""
+
+#: includes/settings-page.php:349
+#: includes/settings-page.php:606
+msgid "Choose Image"
+msgstr ""
+
+#: includes/settings-page.php:361
+#: includes/settings-page.php:859
+msgid "Open in new tab?"
+msgstr ""
+
+#: includes/settings-page.php:367
+#: includes/settings-page.php:864
+msgid "Yes, open in new tab"
+msgstr ""
+
+#: includes/settings-page.php:382
+#: includes/settings-page.php:870
 msgid "Close (x) button action"
 msgstr ""
 
+#: includes/settings-page.php:387
 msgid "Also open the Target URL (in a new tab) when the visitor dismisses this ad with the x button"
+msgstr ""
+
+#: includes/settings-page.php:394
+msgid "Fallback ad code"
+msgstr ""
+
+#: includes/settings-page.php:398
+msgid "Optional HTML/JS ad code shown when no banner is set."
+msgstr ""
+
+#: includes/settings-page.php:411
+msgid "Frequency cap (hours)"
+msgstr ""
+
+#: includes/settings-page.php:417
+msgid "Minimum hours before this ad shows again to the same browser. Leave 0 to show on every page view (default behavior)."
+msgstr ""
+
+#: includes/settings-page.php:424
+msgid "Display Behavior"
+msgstr ""
+
+#: includes/settings-page.php:429
+msgid "Show immediately on page load"
+msgstr ""
+
+#: includes/settings-page.php:432
+msgid "Show after delay (seconds)"
+msgstr ""
+
+#: includes/settings-page.php:435
+msgid "Show on exit intent"
+msgstr ""
+
+#: includes/settings-page.php:442
+msgid "Delay in seconds"
+msgstr ""
+
+#: includes/settings-page.php:443
+msgid "Select how and when the popup should appear."
+msgstr ""
+
+#: includes/settings-page.php:453
+msgid "Minimum hours before this popup can reappear (per device/browser)."
+msgstr ""
+
+#: includes/settings-page.php:464
+msgid "Billboard (below menu, desktop only)"
+msgstr ""
+
+#: includes/settings-page.php:465
+msgid "Balloon Left (bottom-left corner)"
+msgstr ""
+
+#: includes/settings-page.php:466
+msgid "Balloon Right (bottom-right corner)"
+msgstr ""
+
+#: includes/settings-page.php:467
+msgid "Float Left (left sidebar)"
+msgstr ""
+
+#: includes/settings-page.php:468
+msgid "Float Right (right sidebar)"
+msgstr ""
+
+#: includes/settings-page.php:469
+msgid "Catfish Top (sticky top, desktop only)"
+msgstr ""
+
+#: includes/settings-page.php:470
+msgid "Catfish Bottom (sticky bottom, desktop only)"
+msgstr ""
+
+#: includes/settings-page.php:471
+msgid "Popup Center PC (desktop only)"
+msgstr ""
+
+#: includes/settings-page.php:472
+msgid "Popup Center Mobile (mobile only)"
+msgstr ""
+
+#: includes/settings-page.php:473
+msgid "Sticky Top (mobile only)"
+msgstr ""
+
+#: includes/settings-page.php:474
+msgid "Sticky Bottom (mobile only)"
+msgstr ""
+
+#: includes/settings-page.php:475
+msgid "Mini Billboard (mobile only)"
+msgstr ""
+
+#: includes/settings-page.php:476
+msgid "Before Content (desktop)"
+msgstr ""
+
+#: includes/settings-page.php:477
+msgid "Before Content (mobile)"
+msgstr ""
+
+#: includes/settings-page.php:478
+msgid "After Content (desktop)"
+msgstr ""
+
+#: includes/settings-page.php:479
+msgid "After Content (mobile)"
+msgstr ""
+
+#: includes/settings-page.php:480
+msgid "Popunder (new tab on first click)"
+msgstr ""
+
+#: includes/settings-page.php:507
+msgid "Settings saved successfully."
+msgstr ""
+
+#: includes/settings-page.php:516
+msgid "PC"
+msgstr ""
+
+#: includes/settings-page.php:517
+msgid "Mobile"
+msgstr ""
+
+#: includes/settings-page.php:518
+msgid "Popunder & Global"
+msgstr ""
+
+#: includes/settings-page.php:519
+msgid "Affiliate Gate"
+msgstr ""
+
+#: includes/settings-page.php:520
+#: includes/settings-page.php:750
+msgid "Floating Button"
+msgstr ""
+
+#: includes/settings-page.php:557
+msgid "Header Code"
+msgstr ""
+
+#: includes/settings-page.php:560
+msgid "Code to insert inside <head>."
+msgstr ""
+
+#: includes/settings-page.php:564
+msgid "Footer Code"
+msgstr ""
+
+#: includes/settings-page.php:567
+msgid "Code to insert before </body>."
+msgstr ""
+
+#: includes/settings-page.php:576
+msgid "Content Selector"
+msgstr ""
+
+#: includes/settings-page.php:582
+msgid "CSS selector of the content block to gate (e.g. .entry-content)."
+msgstr ""
+
+#: includes/settings-page.php:587
+msgid "Affiliate Link (Required)"
+msgstr ""
+
+#: includes/settings-page.php:594
+msgid "Enter multiple links separated by commas (,) to display them randomly."
+msgstr ""
+
+#: includes/settings-page.php:600
+msgid "Banner Image URL"
+msgstr ""
+
+#: includes/settings-page.php:611
+msgid "Intro Text"
+msgstr ""
+
+#: includes/settings-page.php:618
+msgid "Outro Text"
+msgstr ""
+
+#: includes/settings-page.php:625
+msgid "Display Mode"
+msgstr ""
+
+#: includes/settings-page.php:631
+msgid "Show every time (unless clicked in this post)"
+msgstr ""
+
+#: includes/settings-page.php:636
+msgid "Hide after click for X hours"
+msgstr ""
+
+#: includes/settings-page.php:641
+msgid "Show randomly (by % chance)"
+msgstr ""
+
+#: includes/settings-page.php:650
+msgid "Show every X views"
+msgstr ""
+
+#: includes/settings-page.php:659
+msgid "Show on specific views (e.g. 1,3,9)"
+msgstr ""
+
+#: includes/settings-page.php:670
+msgid "Expire Duration (Hours)"
+msgstr ""
+
+#: includes/settings-page.php:676
+msgid "Only applies if \"Show every time\" or \"Hide after click\" or \"Show on custom pages\" is selected."
+msgstr ""
+
+#: includes/settings-page.php:693
+msgid "Blur Overlay Link & Selector"
+msgstr ""
+
+#: includes/settings-page.php:707
+msgid "If all fields are set, a semi-transparent clickable overlay will appear on the selected element, only on specific views (e.g. 2,5,9)."
+msgstr ""
+
+#: includes/settings-page.php:719
+#: includes/settings-page.php:732
+msgid "None"
+msgstr ""
+
+#: includes/settings-page.php:720
+msgid "Tag / Voucher"
+msgstr ""
+
+#: includes/settings-page.php:721
+msgid "Gift"
+msgstr ""
+
+#: includes/settings-page.php:722
+msgid "Fire"
+msgstr ""
+
+#: includes/settings-page.php:723
+msgid "Bell"
+msgstr ""
+
+#: includes/settings-page.php:724
+msgid "Cart"
+msgstr ""
+
+#: includes/settings-page.php:725
+msgid "Percent / Discount"
+msgstr ""
+
+#: includes/settings-page.php:726
+msgid "Star"
+msgstr ""
+
+#: includes/settings-page.php:727
+msgid "Lock"
+msgstr ""
+
+#: includes/settings-page.php:728
+msgid "Arrow Right"
+msgstr ""
+
+#: includes/settings-page.php:733
+msgid "Heartbeat"
+msgstr ""
+
+#: includes/settings-page.php:734
+msgid "Pulse"
+msgstr ""
+
+#: includes/settings-page.php:735
+msgid "Shake"
+msgstr ""
+
+#: includes/settings-page.php:736
+msgid "Bounce"
+msgstr ""
+
+#: includes/settings-page.php:737
+msgid "Tada"
+msgstr ""
+
+#: includes/settings-page.php:738
+msgid "Swing"
+msgstr ""
+
+#: includes/settings-page.php:742
+msgid "Bottom Right"
+msgstr ""
+
+#: includes/settings-page.php:743
+msgid "Bottom Left"
+msgstr ""
+
+#: includes/settings-page.php:744
+msgid "Top Right"
+msgstr ""
+
+#: includes/settings-page.php:745
+msgid "Top Left"
+msgstr ""
+
+#: includes/settings-page.php:751
+msgid "A floating, attention-grabbing call-to-action button pinned to a corner of the screen."
+msgstr ""
+
+#: includes/settings-page.php:756
+msgid "Enable"
+msgstr ""
+
+#: includes/settings-page.php:761
+msgid "Show the floating button on the site"
+msgstr ""
+
+#: includes/settings-page.php:767
+msgid "Corner Position"
+msgstr ""
+
+#: includes/settings-page.php:781
+msgid "Edge Spacing (px)"
+msgstr ""
+
+#: includes/settings-page.php:783
+msgid "Horizontal:"
+msgstr ""
+
+#: includes/settings-page.php:788
+msgid "Vertical:"
+msgstr ""
+
+#: includes/settings-page.php:793
+msgid "Distance from the selected corner's edges."
+msgstr ""
+
+#: includes/settings-page.php:798
+msgid "Attention Effect"
+msgstr ""
+
+#: includes/settings-page.php:808
+msgid "Built-in animation to help the button catch the visitor's eye."
+msgstr ""
+
+#: includes/settings-page.php:813
+msgid "Icon"
+msgstr ""
+
+#: includes/settings-page.php:823
+msgid "Built-in SVG icon shown next to the button text."
+msgstr ""
+
+#: includes/settings-page.php:828
+msgid "Badge Text (optional)"
+msgstr ""
+
+#: includes/settings-page.php:832
+msgid "e.g. VOUCHER 50%"
+msgstr ""
+
+#: includes/settings-page.php:834
+msgid "Small badge shown above the button. Leave empty to hide it."
+msgstr ""
+
+#: includes/settings-page.php:839
+msgid "Button Text"
+msgstr ""
+
+#: includes/settings-page.php:843
+msgid "e.g. Grab the Deal"
+msgstr ""
+
+#: includes/settings-page.php:849
+msgid "Links"
+msgstr ""
+
+#: includes/settings-page.php:854
+msgid "One link per line. When more than one link is set, a random one is shown on each page view."
+msgstr ""
+
+#: includes/settings-page.php:875
+msgid "Also open the link (in a new tab) when the visitor dismisses this button with the x button"
+msgstr ""
+
+#: includes/settings-page.php:881
+msgid "Button Colors"
+msgstr ""
+
+#: includes/settings-page.php:883
+#: includes/settings-page.php:895
+msgid "Background:"
+msgstr ""
+
+#: includes/settings-page.php:886
+#: includes/settings-page.php:898
+msgid "Text:"
+msgstr ""
+
+#: includes/settings-page.php:893
+msgid "Badge Colors"
+msgstr ""
+
+#: includes/settings-page.php:905
+msgid "Device"
+msgstr ""
+
+#: includes/settings-page.php:909
+msgid "Desktop & Mobile"
+msgstr ""
+
+#: includes/settings-page.php:910
+msgid "Desktop only"
+msgstr ""
+
+#: includes/settings-page.php:911
+msgid "Mobile only"
+msgstr ""
+
+#: includes/settings-page.php:930
+msgid "Save Settings"
+msgstr ""
+
+#: init-ad-engine.php:505
+msgid "Settings"
 msgstr ""

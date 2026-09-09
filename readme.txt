@@ -2,9 +2,9 @@
 Contributors: brokensmile.2103
 Tags: ads, banner, popup, popunder, content locking
 Requires at least: 5.5
-Tested up to: 7.0
+Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.6
+Stable tag: 1.7
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -30,6 +30,9 @@ Mini Billboard, Sticky Top/Bottom, Popup Center, Before/After Content
 
 - **Special:**  
 Popunder (opens new tab on first click), Global header/footer code injection
+
+- **Floating Button:**  
+A corner-pinned, attention-grabbing CTA button with built-in animation effects (heartbeat, pulse, shake, bounce, tada, swing), built-in SVG icons, random link rotation, and full color customization
 
 This plugin is part of the [Init Plugin Suite](https://en.inithtml.com/init-plugin-suite-minimalist-powerful-and-free-wordpress-plugins/) — a collection of minimalist, fast, and developer-focused tools for WordPress.
 
@@ -96,6 +99,19 @@ No. Version 1.0 focuses on display only. Analytics may be added in future update
 
 == Changelog ==
 
+= 1.7 – September 10, 2026 =
+- New: **Floating Button** – a new, separate ad format (own settings tab, like Affiliate Gate) for a corner-pinned floating CTA button
+- New: Position is configurable to any of the 4 screen corners, with independent horizontal/vertical spacing from the edges
+- New: Built-in attention-grabbing animation effects – Heartbeat, Pulse, Shake, Bounce, Tada, Swing (or None)
+- New: Built-in SVG icon library (Tag, Gift, Fire, Bell, Cart, Percent, Star, Lock, Arrow) – no image upload required
+- New: Multiple links supported via a one-per-line textarea; a random link is picked on each page view
+- New: Optional badge label (e.g. "VOUCHER 50%") shown above the button, with its own colors
+- New: Close (x) button with an option to force-open the link in a new tab on dismiss, matching the existing ad positions' behavior
+- New: Fully customizable button/badge background and text colors
+- New: Desktop/Mobile/Both device targeting and optional date-range scheduling, consistent with existing ad positions
+- Dev: Added `init_plugin_suite_ad_engine_should_enqueue_floating_cta` and `init_plugin_suite_ad_engine_floating_cta_data` filters
+- i18n: Added and translated new strings for the Floating Button tab (.pot/.po/.mo regenerated)
+
 = 1.6 – July 18, 2026 =
 - New: Optional Schedule (start/end date) for every ad position, popunder, and Affiliate Gate — set a date window and the plugin stops serving it outside that range automatically, no manual on/off toggling needed
 - New: Frequency cap (hours) for static banner positions (Billboard, Balloon L/R, Float L/R, Catfish Top/Bottom, Mini Billboard, Sticky Top/Bottom Mobile) — limits how often the same browser sees that banner again. Defaults to 0 (no cap), so existing sites keep their current always-on behavior
@@ -142,7 +158,7 @@ No. Version 1.0 focuses on display only. Analytics may be added in future update
 - New: Refreshing the same page no longer increases step count – only new pageviews are tracked
 - New: Customizable selector for content gating
 - New: Inline script config injected in <head> to avoid layout shift
-- New: Filter `init_ad_engine_should_enqueue_affiliate_gate` allows theme to control when to enqueue the affiliate gate
+- New: Filter `init_plugin_suite_ad_engine_should_enqueue_affiliate_gate` allows theme to control when to enqueue the affiliate gate
 
 = 1.0 – May 29, 2025 =
 - Initial release

@@ -3,13 +3,13 @@
  * Plugin Name: Init Ad Engine
  * Plugin URI: https://inithtml.com/plugin/init-ad-engine/
  * Description: A lightweight but powerful ad display engine for WordPress. Smart placement, no code required.
- * Version: 1.6
+ * Version: 1.7
  * Author: Init HTML
  * Author URI: https://inithtml.com/
  * Text Domain: init-ad-engine
  * Domain Path: /languages
  * Requires at least: 5.5
- * Tested up to: 7.0
+ * Tested up to: 7.1
  * Requires PHP: 7.4
  * License: GPLv2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -17,7 +17,7 @@
 
 defined('ABSPATH') || exit;
 
-define('INIT_PLUGIN_SUITE_AD_ENGINE_VERSION',        '1.6');
+define('INIT_PLUGIN_SUITE_AD_ENGINE_VERSION',        '1.7');
 define('INIT_PLUGIN_SUITE_AD_ENGINE_SLUG',           'init-ad-engine');
 define('INIT_PLUGIN_SUITE_AD_ENGINE_OPTION',         'init_plugin_suite_ad_engine_settings');
 define('INIT_PLUGIN_SUITE_AD_ENGINE_URL',            plugin_dir_url(__FILE__));
@@ -333,6 +333,74 @@ add_action('wp_enqueue_scripts', function () {
             wp_add_inline_script(
                 'init-ad-engine-affiliate-gate',
                 'window.InitAdGateConfig = ' . wp_json_encode($aff_data) . ';',
+                'before'
+            );
+        }
+    }
+
+    // =====================
+    // 3) floating-cta.js
+    // =====================
+    $fcta = isset($settings['floating_cta']) && is_array($settings['floating_cta']) ? $settings['floating_cta'] : array();
+
+    $fcta_links = array();
+    if (!empty($fcta['links']) && is_string($fcta['links'])) {
+        $fcta_links_raw = preg_split('/\r\n|\r|\n/', $fcta['links']);
+        $fcta_links     = array_values(array_filter(array_map('trim', $fcta_links_raw)));
+    }
+
+    $fcta_schedule_ok = init_plugin_suite_ad_engine_is_within_schedule(
+        isset($fcta['schedule_start']) ? $fcta['schedule_start'] : '',
+        isset($fcta['schedule_end']) ? $fcta['schedule_end'] : ''
+    );
+
+    $fcta_device      = isset($fcta['device']) ? $fcta['device'] : 'both';
+    $fcta_is_mobile   = wp_is_mobile();
+    $fcta_device_ok   = (
+        $fcta_device === 'both' ||
+        ($fcta_device === 'desktop' && !$fcta_is_mobile) ||
+        ($fcta_device === 'mobile' && $fcta_is_mobile)
+    );
+
+    if (!empty($fcta['enabled']) && !empty($fcta_links) && $fcta_schedule_ok && $fcta_device_ok) {
+        $should_enqueue_fcta = apply_filters('init_plugin_suite_ad_engine_should_enqueue_floating_cta', true, $fcta);
+
+        if ($should_enqueue_fcta) {
+            wp_register_script(
+                'init-ad-engine-floating-cta',
+                INIT_PLUGIN_SUITE_AD_ENGINE_ASSETS_URL . 'js/floating-cta.js',
+                array(),
+                INIT_PLUGIN_SUITE_AD_ENGINE_VERSION,
+                true
+            );
+            wp_enqueue_script('init-ad-engine-floating-cta');
+
+            $fcta_data = array(
+                'corner'              => isset($fcta['corner']) ? $fcta['corner'] : 'bottom-right',
+                'offset_x'            => isset($fcta['offset_x']) ? intval($fcta['offset_x']) : 20,
+                'offset_y'            => isset($fcta['offset_y']) ? intval($fcta['offset_y']) : 20,
+                'effect'              => isset($fcta['effect']) ? $fcta['effect'] : 'heartbeat',
+                'icon'                => isset($fcta['icon']) ? $fcta['icon'] : 'tag',
+                'badge_text'          => isset($fcta['badge_text']) ? $fcta['badge_text'] : '',
+                'button_text'         => isset($fcta['button_text']) ? $fcta['button_text'] : '',
+                'links'               => $fcta_links,
+                'target'              => (isset($fcta['open_new_tab']) && $fcta['open_new_tab'] === '_blank') ? '_blank' : '',
+                'force_open_on_close' => !empty($fcta['force_open_on_close']),
+                'bg_color'            => isset($fcta['bg_color']) ? $fcta['bg_color'] : '#ee4d2d',
+                'text_color'          => isset($fcta['text_color']) ? $fcta['text_color'] : '#ffffff',
+                'badge_bg_color'      => isset($fcta['badge_bg_color']) ? $fcta['badge_bg_color'] : '#b71c1c',
+                'badge_text_color'    => isset($fcta['badge_text_color']) ? $fcta['badge_text_color'] : '#ffffff',
+            );
+
+            $fcta_data = apply_filters(
+                'init_plugin_suite_ad_engine_floating_cta_data',
+                $fcta_data,
+                $fcta
+            );
+
+            wp_add_inline_script(
+                'init-ad-engine-floating-cta',
+                'window.InitAdEngineFloatingCta = ' . wp_json_encode($fcta_data) . ';',
                 'before'
             );
         }
